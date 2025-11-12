@@ -1,17 +1,21 @@
 <?php
 require 'Product.php';
 require 'TestProdRepo.php';
+include  'cart.php';
 $data = TestProdRepo::init();
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
-<!-- html Code made with the help of AI tools-->
+<!-- html and jquery Code made with the help of AI tools-->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rhad Cameras - Shop</title>
     <link rel="stylesheet" href="./styles.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-
+hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script src="cart.js"></script>
 </head>
 
 <body>
@@ -64,7 +68,6 @@ $data = TestProdRepo::init();
             ?>
 
         </div>
-    </div>
     </div>
 </section>
 </body>
