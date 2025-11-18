@@ -16,6 +16,8 @@ $data = TestProdRepo::init();
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-
 hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     <script src="cart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body>
@@ -26,6 +28,7 @@ hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     </div>
 
     <div class="nav-right">
+        <a href="#" data-bs-toggle="modal" data-bs-target="#loginModal" class="nav-login">LOGIN</a>
         <a href="#">ABOUT</a>
         <a hreft="#" class="cart">
             <p>Q</p> <!-- replace with icon-->
@@ -70,6 +73,45 @@ hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
         </div>
     </div>
 </section>
+<!-- LOGIN MODAL -->
+<div class="modal fade" id="loginModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" style="border-radius: 15px; padding: 10px;">
+      
+      <div class="modal-header border-0">
+        <h5 class="modal-title">Account</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+        <form action="dashboard.php" method="POST">
+
+          <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input type="email" name="email" class="form-control" placeholder="you@example.com" required>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Password</label>
+            <input type="password" name="password" class="form-control" placeholder="••••••••" required>
+          </div>
+
+          <button type="submit" class="btn w-100" 
+          style="background:#76eec6; font-weight:bold;">
+            Login
+          </button>
+
+        </form>
+      </div>
+
+      <div class="modal-footer border-0">
+        <a href="#" class="small">Forgot Password?</a>
+      </div>
+
+    </div>
+  </div>
+</div>
+
 </body>
 
 </html>

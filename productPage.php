@@ -103,14 +103,14 @@
 
     <!-- LEFT: IMAGE -->
     <div class="col-md-6 text-center">
-      <img src="yellowPage.jpg" class="product-image" alt="Camera">
+      <img src="yellowPage2.png" class="product-image" alt="Camera">
     </div>
 
     <!-- RIGHT: DETAILS -->
     <div class="col-md-6">
       <h2 class="fw-bold">Rhad Yellow Series</h2>
 
-      <p class="price">999.00 $</p>
+      <p class="price">59.99 $</p>
 
       <label class="form-label">MODEL:</label>
       <select class="form-select w-auto mb-3">
