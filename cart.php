@@ -1,7 +1,7 @@
 <?php
-$data = TestProdRepo::init();
-?>
 
+?>
+<!-- html css Code made with the help of AI tools-->
 <div id="cart-overlay"></div>
 
 <!-- Cart Sidebar -->
@@ -31,9 +31,3 @@ $data = TestProdRepo::init();
     </div>
 </div>
 
-<div class="cart-footer">
-    <div class="cart-total">
-        <span>Total</span>
-        <span>CHF 1,163.40</span>
-    </div>
-</div>
