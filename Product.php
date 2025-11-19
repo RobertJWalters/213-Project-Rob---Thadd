@@ -8,7 +8,7 @@ class Product
     private $category;
     private $desc;
     public function __construct($name, $id,
-                                $price = 0,
+                                $price,
                                 $category="none",
                                 $desc="Description missing"){
         $this->name = $name;

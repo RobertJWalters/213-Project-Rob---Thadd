@@ -85,7 +85,7 @@
 
     <!-- LINKS -->
       <div class="nav-center">
-        <a class="nav-link" href="index.php">Home</a>
+        <a class="nav-link" href="shop.php">Home</a>
         <a class="nav-link" href="product.php">Products</a>
       </div>
       

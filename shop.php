@@ -2,7 +2,11 @@
 require 'Product.php';
 require 'TestProdRepo.php';
 include  'cart.php';
-$data = TestProdRepo::init();
+//$data = TestProdRepo::init();
+require_once __DIR__ . '/db.php';
+$mysqli = db::getDB();
+$prodRepo = new ProductRepo($mysqli);
+$data = $prodRepo->findAll();
 ?>
 
 <!DOCTYPE html>
@@ -59,13 +63,13 @@ hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 <section class="products">
     <div class="container">
         <div class="product-grid">
-            <!-- Product Card Example - Duplicate this structure for each product -->
+            <!-- -->
             <?php
             foreach($data as $d){
                 echo "<div class='product-card'>" .
                         "<img src='prod" . $d->getId() . ".jpg' alt='Product? id' class='product-image'>
                 . <h3 class='product-name'>". $d->getName() . "</h3>
-                <p class='product-price'>$59.99</p>
+                <p class='product-price'>". $d->getPrice() . "</p>
             </div> ";
             }
             ?>
