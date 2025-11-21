@@ -1,6 +1,9 @@
 <?php
+require_once 'Product.php';
+require_once 'TestProdRepo.php';
 $data = TestProdRepo::init();
 ?>
+
 
 <div id="cart-overlay"></div>
 

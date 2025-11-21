@@ -1,7 +1,8 @@
 <?php
-require 'Product.php';
-require 'TestProdRepo.php';
-include  'cart.php';
+session_start();
+require_once 'Product.php';
+require_once 'TestProdRepo.php';
+include 'cart.php';
 $data = TestProdRepo::init();
 ?>
 
@@ -18,6 +19,8 @@ hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     <script src="cart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
 </head>
 
 <body>
@@ -28,13 +31,20 @@ hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     </div>
 
     <div class="nav-right">
+    <?php if(!isset($_SESSION['user'])): ?>
         <a href="#" data-bs-toggle="modal" data-bs-target="#loginModal" class="nav-login">LOGIN</a>
-        <a href="#">ABOUT</a>
-        <a hreft="#" class="cart">
-            <p>Q</p> <!-- replace with icon-->
-            <span class="cart-badge"></span>
-        </a>
-    </div>
+    <?php else: ?>
+        <span class="nav-login">Welcome, <?php echo $_SESSION['user']; ?></span>
+        <a href="logout.php" class="nav-login">LOGOUT</a>
+    <?php endif; ?>
+
+    <a href="aboutPage.php">ABOUT</a>
+    <a href="#" class="cart">
+    <i class="bi bi-cart2"></i>
+    <span class="cart-badge"></span>
+  </a>
+</div>
+
 </nav>
 
 <!-- Hero Section -->
@@ -84,7 +94,7 @@ hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
       </div>
 
       <div class="modal-body">
-        <form action="dashboard.php" method="POST">
+        <form action="loginProcess.php" method="POST">
 
           <div class="mb-3">
             <label class="form-label">Email</label>
