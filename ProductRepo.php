@@ -9,21 +9,20 @@ class ProductRepo{
     }
 
     public function findProductByID($id){
-        $query = "SELECT * FROM products WHERE product_id = " . $id . " LIMIT 1";
+        $query = "SELECT * FROM products WHERE product_id = ? LIMIT 1";
         $stmt = $this->database->prepare($query);
+        $stmt->bind_param("i", $id);
         $stmt->execute();
         $res = $stmt->get_result();
-        $row = $res->fetch_all(MYSQLI_ASSOC);
+        $row = $res->fetch_assoc();
 
-        $row[] = new ProductClass(
+        return new ProductClass(
                 $row['product_id'],
                 $row['name'],
                 $row['description'],
                 $row['price'],
                 $row['category']
         );
-
-        return $row;
     }
 
     public function findAll()
