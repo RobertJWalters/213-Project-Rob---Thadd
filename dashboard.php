@@ -1,7 +1,7 @@
 <?php
-require 'Product.php';
-require 'TestProdRepo.php';
-$data = TestProdRepo::init();
+require 'ProductClass.php';
+//require 'TestProdRepo.php';
+//$data = TestProdRepo::init();
 
 ?>
 <!-- Some code made with the help of AI tools-->

@@ -18,7 +18,7 @@ class ProductRepo{
 
         $products = [];
         foreach ($rows as $row) {
-            $products[] = new Product(
+            $products[] = new ProductClass(
                 $row['product_id'],
                 $row['name'],
                 $row['description'],
@@ -28,5 +28,7 @@ class ProductRepo{
         }
         return $products;
     }
+
+    //Maybe add find all of certain category functions?
 
 }

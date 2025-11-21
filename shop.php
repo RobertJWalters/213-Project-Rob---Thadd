@@ -1,11 +1,11 @@
 <?php
-require 'Product.php';
+require 'ProductClass.php';
 require 'ProductRepo.php';
 include  'cart.php';
 require_once __DIR__ . '/db.php';
 $mysqli = db::getDB();
+//If want no db development could put if($mysqli === null) $mysqli = arrDB; //then include an array database
 $prodRepo = new ProductRepo($mysqli);
-$data = $prodRepo->findAll();
 ?>
 
 <!DOCTYPE html>
@@ -64,6 +64,7 @@ hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
         <div class="product-grid">
             <!-- -->
             <?php
+            $data = $prodRepo->findAll();
             foreach($data as $d){
                 echo "<div class='product-card'>" .
                         "<img src='prod" . $d->getId() . ".jpg' alt='Product? id' class='product-image'>
