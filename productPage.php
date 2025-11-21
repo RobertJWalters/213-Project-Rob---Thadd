@@ -1,12 +1,11 @@
 <?php
 require_once 'config.php';
 $mysqli = db::getDB();
-$productItem = new ProductRepo($mysqli);
-
+$productRepo = new ProductRepo($mysqli);
 // Get id from URL query parameter
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
-    $productItem->findProductByID($id);
+    $productItem = $productRepo->findProductByID($id);
 } else {
     echo "Product not found";
     exit();
