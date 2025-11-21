@@ -70,7 +70,7 @@ hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
             foreach ($data as $d) {
                 $id = $d->getId();
                 echo "<div class='product-card'>
-                <a href='productPage.php?id=<?php echo $id; ?>'>" .
+                <a href='productPage.php?id=" . $id . "'>" .
                         "<img src='/photos/prod" . $id . ".jpg' alt='Product? id' class='product-image'>
                 . <h3 class='product-name'>" . $d->getName() . "</h3>
                 <p class='product-price'>" . $d->getPrice() . "</p>
