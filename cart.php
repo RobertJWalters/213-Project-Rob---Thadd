@@ -42,7 +42,9 @@ if ($mysqli === null) {
         foreach ($data as $d) {
             $id = $d->getId();
             echo "<div class='cart-product'>" .
-                    "<a href='productPage.php?id=" . $id . "'></a>
+                    "<a href='productPage.php?id=" . $id . "'>
+                    <img src='/photos/prod" . $id . ".jpg' alt='Product? id' class='product-image'>
+                    </a>
                   . <h3 class='product-name'>" . $d->getName() . "</h3>
                       <p class='product-price'>$59.99</p>
                         <div class='item-quantity'>
