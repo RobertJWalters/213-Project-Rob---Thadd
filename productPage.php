@@ -1,7 +1,20 @@
 <?php
 require_once 'config.php';
-$id = 4;
-$productItem = new ProductClass(12, "Prism LX4","\nBalancing resolution with performance, the Prism LX4 provides a refined large format solution for professional cinematographers. Its robust construction and intuitive interface make it perfect for fast-paced production environments.\n\n<b>Material:</b> Magnesium alloy + polycarbonate construction\nSensor: Full-frame CMOS 42MP\nLens Mount: RL Mount\nApprox Dimensions: 165 x 122 x 98 mm", 5666.88, "Large Format");
+$mysqli = db::getDB();
+$dynProductItem = new ProductRepo($mysqli);
+
+// Get id from URL query parameter
+if (isset($_GET['id'])) {
+    $id = $_GET['id'];
+    $dynProductItem->findProductByID($id);
+} else {
+    echo "Product not found";
+    exit();
+}
+?>
+//for no db testing
+//$id = 4;
+//$productItem = new ProductClass(12, "Prism LX4","\nBalancing resolution with performance, the Prism LX4 provides a refined large format solution for professional cinematographers. Its robust construction and intuitive interface make it perfect for fast-paced production environments.\n\n<b>Material:</b> Magnesium alloy + polycarbonate construction\nSensor: Full-frame CMOS 42MP\nLens Mount: RL Mount\nApprox Dimensions: 165 x 122 x 98 mm", 5666.88, "Large Format");
 
 ?>
 <!DOCTYPE html>
