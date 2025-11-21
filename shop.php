@@ -1,8 +1,8 @@
 <?php
-require 'ProductClass.php';
-require 'ProductRepo.php';
+require_once "config.php";
+
 include  'cart.php';
-require_once __DIR__ . '/db.php';
+
 $mysqli = db::getDB();
 //If want no db development could put if($mysqli === null) $mysqli = arrDB; //then include an array database
 $prodRepo = new ProductRepo($mysqli);
