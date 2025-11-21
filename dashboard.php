@@ -1,5 +1,5 @@
 <?php
-require 'ProductClass.php';
+//require 'ProductClass.php';
 //require 'TestProdRepo.php';
 //$data = TestProdRepo::init();
 

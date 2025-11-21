@@ -1,10 +1,12 @@
 <?php
-require 'ProductClass.php';
-require 'ProductRepo.php';
-include  'cart.php';
+//require 'ProductClass.php';
+//require 'ProductRepo.php';
+//include  'cart.php';
 require_once __DIR__ . '/db.php';
 $mysqli = db::getDB();
-//If want no db development could put if($mysqli === null) $mysqli = arrDB; //then include an array database
+$arrDB = array(12, 3, 5);
+//If want no db development
+if($mysqli === null) $mysqli = $arrDB; //then include an array database
 $prodRepo = new ProductRepo($mysqli);
 ?>
 <!-- html css Code made with the help of AI tools-->
