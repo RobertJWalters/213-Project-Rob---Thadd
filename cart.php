@@ -1,5 +1,11 @@
 <?php
-
+require 'ProductClass.php';
+require 'ProductRepo.php';
+include  'cart.php';
+require_once __DIR__ . '/db.php';
+$mysqli = db::getDB();
+//If want no db development could put if($mysqli === null) $mysqli = arrDB; //then include an array database
+$prodRepo = new ProductRepo($mysqli);
 ?>
 <!-- html css Code made with the help of AI tools-->
 <div id="cart-overlay"></div>
@@ -16,6 +22,7 @@
     <div class="cart-products">
         <!-- Product Card Example - Duplicate this structure for each product -->
         <?php
+        $data = $prodRepo->findAll(); //change to cart repo
         foreach($data as $d){
             echo "<div class='cart-product'>" .
                     "<img src='prod" . $d->getId() . ".jpg' alt='Product? id' class='cart-product-image'>

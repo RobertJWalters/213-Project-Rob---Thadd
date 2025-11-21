@@ -67,7 +67,7 @@ hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
             $data = $prodRepo->findAll();
             foreach($data as $d){
                 echo "<div class='product-card'>" .
-                        "<img src='prod" . $d->getId() . ".jpg' alt='Product? id' class='product-image'>
+                        "<img src='/photos/prod" . $d->getId() . ".jpg' alt='Product? id' class='product-image'>
                 . <h3 class='product-name'>". $d->getName() . "</h3>
                 <p class='product-price'>". $d->getPrice() . "</p>
             </div> ";
