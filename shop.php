@@ -64,13 +64,14 @@ hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 <section class="products">
     <div class="container">
         <div class="product-grid">
-            <!-- -->
+            <!-- Dynamically load products -->
             <?php
             $data = $prodRepo->findAll();
             foreach ($data as $d) {
+                $id = $d->getId();
                 echo "<div class='product-card'>
-                <a href='productpage.php?id=<?php echo urlencode($d->getId()); ?>'>" .
-                        "<img src='/photos/prod" . $d->getId() . ".jpg' alt='Product? id' class='product-image'>
+                <a href='productPage.php?id=<?php echo $id; ?>'>" .
+                        "<img src='/photos/prod" . $id . ".jpg' alt='Product? id' class='product-image'>
                 . <h3 class='product-name'>" . $d->getName() . "</h3>
                 <p class='product-price'>" . $d->getPrice() . "</p>
                 </a>
