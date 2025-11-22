@@ -58,9 +58,11 @@ if ($mysqli === null) {
     <!-- Bootstrap -->
     <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css' rel='stylesheet'>
 
+
     <!-- Icons for Cart -->
-    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css'>
-    <link rel='stylesheet' href='productpage.css'>
+<!--    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css'>-->
+
+    <link rel='stylesheet' href='productPage.css'>
 </head>
 
 <body>
@@ -80,7 +82,7 @@ if ($mysqli === null) {
 
         <!-- Cart right -->
         <a href='cart.php' class='cart-icon ms-auto'>
-            <i class='bi bi-cart2'></i>
+            <img src="/photos/cart.png" alt="Cart" class="cart-image">
         </a>
 
     </div>

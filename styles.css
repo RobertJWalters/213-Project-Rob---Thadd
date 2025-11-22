@@ -57,6 +57,7 @@ nav.scrolled a {
     color: black;
     font-size: 42px;
     font-family: 'Baskerville', 'Times New Roman', Times, serif;
+    user-select: none;
 }
 
 nav.scrolled .logo {
@@ -68,19 +69,25 @@ nav.scrolled .logo {
     cursor: pointer;
 }
 
-.cart-badge {
-    position: absolute;
+.cart-icon {
+    margin: auto 10px;
+    position: relative;
     top: -8px;
     right: -8px;
-    color: black;
-    border-radius: 50%;
-    width: 20px;
-    height: 20px;
+    width: 40px;
+    height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 12px;
-    font-weight: bold;
+}
+
+.cart-icon:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 7px rgba(0, 0, 0, 0.1);
+}
+
+.cart-image{
+    width: 100%;
 }
 
 /* Cart Overlay */
@@ -260,7 +267,7 @@ nav.scrolled .logo {
 
 /* Hero Section */
 .hero {
-    height: 70vh;
+    height: 70vh;  /*maybe make this 120vh*/
     min-height: 600px;
     background-image: url('back.png');
     background-size: cover;
@@ -285,6 +292,7 @@ nav.scrolled .logo {
     text-align: center;
     letter-spacing: 10px;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    user-select: none;
 }
 
 /* Filter Section */
