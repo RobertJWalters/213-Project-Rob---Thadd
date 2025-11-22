@@ -36,10 +36,12 @@ if ($mysqli === null) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rhad Cameras - Shop</title>
     <link rel="stylesheet" href="./styles.css">
+    <link rel="stylesheet" href="cart.css">
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-
 hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     <script src="cart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<!--    <script src="cart.js"></script>-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
@@ -54,7 +56,7 @@ hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
         <a href="#">ABOUT</a>
         <a href="#" data-bs-toggle="modal" data-bs-target="#loginModal" class="nav-login">LOGIN</a>
         <div class="cart">
-            <a href="cart.php" class="cart-icon">
+            <a href="#" class="cart-icon" id="cart-toggle">
                 <img src="/photos/cart.png" alt="Cart" class="cart-image">
             </a>
         </div>

@@ -1,5 +1,6 @@
 <?php
 require_once 'config.php';
+include 'cart.php';
 try {
     $mysqli = db::getDB();
 } catch (Error $e) {
@@ -63,6 +64,8 @@ if ($mysqli === null) {
 <!--    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css'>-->
 
     <link rel='stylesheet' href='productPage.css'>
+    <link rel="stylesheet" href="cart.css">
+<!--    <script src="cart.js"></script>-->
 </head>
 
 <body>
@@ -81,9 +84,10 @@ if ($mysqli === null) {
         </div>
 
         <!-- Cart right -->
-        <a href='cart.php' class='cart-icon ms-auto'>
+        <a href="#" class="cart-icon ms-auto" id="cart-toggle">
             <img src="/photos/cart.png" alt="Cart" class="cart-image">
         </a>
+
 
     </div>
 </nav>
@@ -128,5 +132,6 @@ if ($mysqli === null) {
 </div>
 
 <script src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js'></script>
+
 </body>
 </html>
