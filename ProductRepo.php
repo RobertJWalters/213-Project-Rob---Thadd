@@ -1,5 +1,5 @@
 <?php
-class ProductRepo{
+class ProductRepo implements Repo{
 
     private $database;
 

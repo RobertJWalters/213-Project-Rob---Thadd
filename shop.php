@@ -1,7 +1,6 @@
 <?php
 require_once "config.php";
 
-include 'cart.php';
 
 try {
     $mysqli = db::getDB();
@@ -56,7 +55,7 @@ hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
         <a href="#">ABOUT</a>
         <a href="#" data-bs-toggle="modal" data-bs-target="#loginModal" class="nav-login">LOGIN</a>
         <div class="cart">
-            <a href="#" class="cart-icon" id="cart-toggle">
+            <a href="cart.php" class="cart-icon">
                 <img src="/photos/cart.png" alt="Cart" class="cart-image">
             </a>
         </div>

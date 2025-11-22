@@ -1,6 +1,5 @@
 <?php
 require_once 'config.php';
-include 'cart.php';
 try {
     $mysqli = db::getDB();
 } catch (Error $e) {
@@ -84,7 +83,7 @@ if ($mysqli === null) {
         </div>
 
         <!-- Cart right -->
-        <a href="#" class="cart-icon ms-auto" id="cart-toggle">
+        <a href="cart.php" class="cart-icon">
             <img src="/photos/cart.png" alt="Cart" class="cart-image">
         </a>
 
