@@ -12,11 +12,11 @@ session_start();
 //if ($mysqli === null) {
 
 if (!isset($_SESSION['cart'])) {
-    $d = null;
+    $data = null;
 } else {
     $cart = $_SESSION['cart'];
     try{
-    $d = $cart->getProduct();
+    $data = $cart->getProducts();
     }catch(Error $e){
         echo "fail";
     }
@@ -59,21 +59,21 @@ hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
             <?php
 
             // Display cart items
-            if (!isset($d)) {
+            if (!isset($data)) {
                 echo '<div class="empty-cart">
                         <p>Your cart is empty</p>
                     </div>';
             } else {
+                foreach ($data as $productId => $product) {
+                    $id = $product['product']->getId();
+                    $name = $product['product']->getName();
+                    $formattedPrice = number_format($product['product']->getPrice() / 1, 2, '.', ',');
 
-                $id = $d->getId();
-                $name = $d->getName();
-                $formattedPrice = number_format($d->getPrice() / 1, 2, '.', ',');
-
-                echo '<div class="cart-item">
+                    echo '<div class="cart-item">
                             <img src="/photos/prod' . $id . '.jpg" alt="' . htmlspecialchars($name) . '" class="item-image">
                             <div class="item-details">
                                 <h3>' . htmlspecialchars($name) . '</h3>
-                                <p>Product ID: ' . $id . '</p>
+                                <p>' . $product['product']->getCategory() . '</p>
                                 <div class="item-controls">
                                     <div class="quantity-control">
                                         <button type="button" class="decrease-qty">−</button>
@@ -87,7 +87,7 @@ hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
                                 <div class="price">$' . $formattedPrice . ' </div>
                             </div>
                         </div>';
-
+                }
             }
             ?>
         </div>

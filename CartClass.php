@@ -3,7 +3,6 @@
 class CartClass
 {
     private $id;
-    private $product;
 
     private $products;  //asc array of products and quantities
 
@@ -11,14 +10,9 @@ class CartClass
 
     public function __construct($customer)
     {
-//        $this->id = $id;
-        $this->product= null;
+        $this->products = [];
         $this->customer = $customer;
     }
-
-//    public function getId(){
-//        return $this->id;
-//    }
 
     public function getProducts(){
         return $this->products;
@@ -35,11 +29,14 @@ class CartClass
     }
 
     public function addProduct(ProductClass $product){
-//        $this->products[] = $product;
-        $this->product = $product;
+        $id = $product->getId();
+        if(isset($this->products[$id])){
+            $this->products[$id]['quantity']++;
+        }
+        $this->products[$id] =[
+            "product" => $product,
+            "quantity" => 1
+        ];
     }
 
-    public function getProduct(){
-        return $this->product;
-    }
 }
