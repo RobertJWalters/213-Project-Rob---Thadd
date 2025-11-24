@@ -12,7 +12,7 @@ class CartClass
     public function __construct($customer)
     {
 //        $this->id = $id;
-        $this->products = [];
+        $this->product= null;
         $this->customer = $customer;
     }
 

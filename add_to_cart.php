@@ -1,8 +1,9 @@
 <?php
+
 require_once "config.php";
 session_start();
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') {
     $productId = $_POST['product_id'] ?? null;
     $redirectTo = $_POST['redirect_to'] ?? 'shop.php';
 
@@ -16,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Get the product from session
-    $product = $_SESSION['productItem'];
+    $product = $_SESSION['productItem'] ?? null;
 
     if (!$product) {
         die('Product not found');
@@ -24,10 +25,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Add to cart
     $cart = $_SESSION['cart'];
-    $cart->addProduct($product);
-    $_SESSION['cart'] = $cart;
+    try {
+        $cart->addProduct($product);
+        $_SESSION['cart'] = $cart;
 
-    error_log('Cart saved: ' . count($_SESSION['cart']->getProducts()) . ' items');
+    } catch (Exception $e) {
+        echo $e->getMessage();
+    }
+
     header('Location: ' . $redirectTo);
     exit;
 }

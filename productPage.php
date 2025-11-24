@@ -1,6 +1,7 @@
 <?php
-session_start();
+
 require_once 'config.php';
+session_start();
 $products = null;
 try {
     $mysqli = db::getDB();
@@ -125,10 +126,6 @@ $_SESSION['productItem'] = $productItem;
 <!--            <form method="POST">-->
 <!--                <button class='add-btn' type="submit" name="action" value="addToCart">ADD TO CART</button>-->
 <!--            </form>-->
-<!--            <form id="cart" class="form-inline" action="/carts/create" method="post">-->
-<!--                <input type="hidden" name="product_id" value="--><?php //=$id?><!--">-->
-<!--                <input type="hidden" name="product_name" value="--><?php //= $products[$i]['name']?><!--">-->
-<!--                <input type="hidden" name="product_price" value="--><?php //= $products[$i]['unit_price']?><!--">-->
 
             <form method="POST" action="add_to_cart.php">
                 <input type="hidden" name="product_id" value="<?php echo $productItem->getId();?>">

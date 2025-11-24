@@ -1,3 +1,31 @@
+<?php
+
+require_once "config.php";
+session_start();
+//try {
+//    $mysqli = db::getDB();
+//} catch (Error $e) {
+//    $mysqli = null;
+//}
+
+// Fallback to array database if no connection
+//if ($mysqli === null) {
+
+if (!isset($_SESSION['cart'])) {
+    $d = null;
+} else {
+    $cart = $_SESSION['cart'];
+    try{
+    $d = $cart->getProduct();
+    }catch(Error $e){
+        echo "fail";
+    }
+
+}
+//}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,37 +57,19 @@ hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
         <!-- Main Cart Items -->
         <div class="cart-items">
             <?php
-            session_start();
-            require_once "config.php";
-
-            try {
-                $mysqli = db::getDB();
-            } catch (Error $e) {
-                $mysqli = null;
-            }
-
-            // Fallback to array database if no connection
-            if ($mysqli === null) {
-                if (!isset($_SESSION['cart'])) {
-                    $d = null;
-                } else {
-                    $cart = $_SESSION['cart'];
-                    $d = $cart->getProduct();
-                }
-            }
 
             // Display cart items
-            if (!isset($d) || $d === null) {
+            if (!isset($d)) {
                 echo '<div class="empty-cart">
                         <p>Your cart is empty</p>
                     </div>';
             } else {
 
-                    $id = $d->getId();
-                    $name = $d->getName();
-                    $formattedPrice = number_format($d->getPrice() / 1, 2, '.', ',');
+                $id = $d->getId();
+                $name = $d->getName();
+                $formattedPrice = number_format($d->getPrice() / 1, 2, '.', ',');
 
-                    echo '<div class="cart-item">
+                echo '<div class="cart-item">
                             <img src="/photos/prod' . $id . '.jpg" alt="' . htmlspecialchars($name) . '" class="item-image">
                             <div class="item-details">
                                 <h3>' . htmlspecialchars($name) . '</h3>
@@ -108,7 +118,10 @@ hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
                 </div>
             </div>
 
-            <button class="checkout-btn">CHECKOUT</button>
+            <a href="checkOut.php">
+                <button class="checkout-btn">CHECKOUT</button>
+            </a>
+
         </div>
     </div>
 </div>
