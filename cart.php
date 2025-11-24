@@ -29,7 +29,7 @@ hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
         <!-- Main Cart Items -->
         <div class="cart-items">
             <?php
-            // Your PHP code here
+            session_start();
             require_once "config.php";
 
             try {

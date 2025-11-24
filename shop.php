@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once "config.php";
 
 
@@ -25,6 +26,8 @@ if ($mysqli === null) {
     $prodRepo = new ProductRepo($mysqli);
     $data = $prodRepo->findAll();
 }
+//
+//$SESSION['cart'] = new CartClass(null);
 ?>
 
 <!DOCTYPE html>

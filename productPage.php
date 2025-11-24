@@ -1,5 +1,7 @@
 <?php
+session_start();
 require_once 'config.php';
+$products = null;
 try {
     $mysqli = db::getDB();
 } catch (Error $e) {
@@ -47,6 +49,8 @@ if ($mysqli === null) {
         exit();
     }
 }
+$_SESSION['productItem'] = $productItem;
+$_SESSION['re'] = 'productPage.php?id=' . $productItem->getId();
 ?>
 <!DOCTYPE html>
 <html lang='en'>
@@ -115,9 +119,22 @@ if ($mysqli === null) {
                 <option>With 105mm Lens</option>
             </select>
 
-            <p class='text-danger fw-semibold'>Out of Stock</p>
+<!--       put logic so display this if stock for this product is 0
+            <p class='text-danger fw-semibold'>Out of Stock</p>-->
+            <!--      old button-->
+<!--            <form method="POST">-->
+<!--                <button class='add-btn' type="submit" name="action" value="addToCart">ADD TO CART</button>-->
+<!--            </form>-->
+<!--            <form id="cart" class="form-inline" action="/carts/create" method="post">-->
+<!--                <input type="hidden" name="product_id" value="--><?php //=$id?><!--">-->
+<!--                <input type="hidden" name="product_name" value="--><?php //= $products[$i]['name']?><!--">-->
+<!--                <input type="hidden" name="product_price" value="--><?php //= $products[$i]['unit_price']?><!--">-->
 
-            <button class='add-btn'>ADD TO CART</button>
+            <form method="POST" action="add_to_cart.php">
+                <input type="hidden" name="product_id" value="<?php echo $productItem->getId();?>">
+                <input type="hidden" name="redirect_to" value="<?php echo 'productPage.php?id=' . $productItem->getId();?>">
+                <button class='add-btn' type="submit">ADD TO CART</button>
+            </form>
 
             <!-- SPECS -->
             <div class='mt-4'>

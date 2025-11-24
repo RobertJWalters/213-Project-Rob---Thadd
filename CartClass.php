@@ -8,16 +8,16 @@ class CartClass
 
     private $customer;
 
-    public function __construct($id, $products, $customer="NoCustomer")
+    public function __construct($customer)
     {
-        $this->id = $id;
-        $this->products = $products;
+//        $this->id = $id;
+        $this->products = [];
         $this->customer = $customer;
     }
 
-    public function getId(){
-        return $this->id;
-    }
+//    public function getId(){
+//        return $this->id;
+//    }
 
     public function getProducts(){
         return $this->products;
