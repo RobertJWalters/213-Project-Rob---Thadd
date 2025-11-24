@@ -50,7 +50,7 @@ if ($mysqli === null) {
     }
 }
 $_SESSION['productItem'] = $productItem;
-$_SESSION['re'] = 'productPage.php?id=' . $productItem->getId();
+//$_SESSION['re'] = 'productPage.php?id=' . $productItem->getId();
 ?>
 <!DOCTYPE html>
 <html lang='en'>

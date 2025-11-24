@@ -3,6 +3,7 @@ session_start();
 require_once "config.php";
 
 
+
 try {
     $mysqli = db::getDB();
 } catch (Error $e) {
@@ -26,8 +27,10 @@ if ($mysqli === null) {
     $prodRepo = new ProductRepo($mysqli);
     $data = $prodRepo->findAll();
 }
-//
-//$SESSION['cart'] = new CartClass(null);
+
+if (!isset($_SESSION['cart'])) {
+    $_SESSION['cart'] = new CartClass(null);
+}
 ?>
 
 <!DOCTYPE html>

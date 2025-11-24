@@ -3,6 +3,7 @@
 class CartClass
 {
     private $id;
+    private $product;
 
     private $products;  //asc array of products and quantities
 
@@ -34,6 +35,11 @@ class CartClass
     }
 
     public function addProduct(ProductClass $product){
-        $this->products[] = $product;
+//        $this->products[] = $product;
+        $this->product = $product;
+    }
+
+    public function getProduct(){
+        return $this->product;
     }
 }
