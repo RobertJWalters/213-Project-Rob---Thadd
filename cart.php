@@ -17,6 +17,7 @@ if (!isset($_SESSION['cart'])) {
     $cart = $_SESSION['cart'];
     try{
     $data = $cart->getProducts();
+//    echo "<br><br><br><br><br><br><br>" . var_dump($data);  //for testing
     }catch(Error $e){
         echo "fail";
     }
@@ -77,7 +78,7 @@ hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
                                 <div class="item-controls">
                                     <div class="quantity-control">
                                         <button type="button" class="decrease-qty">−</button>
-                                        <input type="number" value="1" min="1" class="qty-input">
+                                        <input type="number" value="'. $product['quantity']. '" min="1" class="qty-input">
                                         <button type="button" class="increase-qty">+</button>
                                     </div>
                                     <button class="remove-btn" title="Remove">✕</button>
