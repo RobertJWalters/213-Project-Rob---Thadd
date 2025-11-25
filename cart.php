@@ -17,7 +17,7 @@ if (!isset($_SESSION['cart'])) {
     $cart = $_SESSION['cart'];
     try{
     $data = $cart->getProducts();
-//    echo "<br><br><br><br><br><br><br>" . var_dump($data);  //for testing
+    echo "<br><br><br><br><br><br><br>" . var_dump($data);  //for testing
     }catch(Error $e){
         echo "fail";
     }
@@ -66,28 +66,31 @@ hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
                     </div>';
             } else {
                 foreach ($data as $productId => $product) {
-                    $id = $product['product']->getId();
-                    $name = $product['product']->getName();
-                    $formattedPrice = number_format($product['product']->getPrice() / 1, 2, '.', ',');
+                        $id = $product['product']->getId();
+                        $name = $product['product']->getName();
+                        $formattedPrice = number_format($product['product']->getPrice() / 1, 2, '.', ',');
 
-                    echo '<div class="cart-item">
+                        echo '<div class="cart-item">
                             <img src="/photos/prod' . $id . '.jpg" alt="' . htmlspecialchars($name) . '" class="item-image">
                             <div class="item-details">
                                 <h3>' . htmlspecialchars($name) . '</h3>
                                 <p>' . $product['product']->getCategory() . '</p>
-                                <div class="item-controls">
-                                    <div class="quantity-control">
-                                        <button type="button" class="decrease-qty">−</button>
-                                        <input type="number" value="'. $product['quantity']. '" min="1" class="qty-input">
-                                        <button type="button" class="increase-qty">+</button>
-                                    </div>
-                                    <button class="remove-btn" title="Remove">✕</button>
-                                </div>
+                                <form class="item-controls" method="POST" action="update_cart.php">
+                                       <input type="hidden" name="redirect_to" value="cart.php">
+                                       <input type="hidden" name="id" value="' . $id . '">
+                                       <div class="quantity-control">
+                                           <button class="decrease-qty" name="action" value="decrease" type="submit">−</button>
+                                            <input type="number" value="' . $product['quantity'] . '" min="1" class="qty-input">
+                                            <button class="increase-qty" name="action" value="increase" type="submit">+</button>
+                                        </div>
+                                        <button class="remove" name="action" value="remove" type="submit">✕</button>
+                              </form>
                             </div>
                             <div class="item-price">
                                 <div class="price">$' . $formattedPrice . ' </div>
                             </div>
                         </div>';
+
                 }
             }
             ?>

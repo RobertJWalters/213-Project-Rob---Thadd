@@ -31,6 +31,7 @@ if ($mysqli === null) {
 if (!isset($_SESSION['cart'])) {
     $_SESSION['cart'] = new CartClass(null);
 }
+
 ?>
 
 <!DOCTYPE html>

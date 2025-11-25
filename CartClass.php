@@ -41,4 +41,23 @@ class CartClass
 
     }
 
+    public function removeProduct(ProductClass $product){
+        $id = $product->getId();
+        if(isset($this->products[$id])){
+            $this->products[$id]['quantity'] = 0;
+            unset($this->products[$id]);
+        }
+    }
+
+    public function decreaseProductQty(ProductClass $product){
+        $id = $product->getId();
+        if(isset($this->products[$id])){
+            if($this->products[$id]['quantity'] === 1){
+                $this->removeProduct($product);
+            }else {
+                $this->products[$id]['quantity']--;
+            }
+        }
+    }
+
 }

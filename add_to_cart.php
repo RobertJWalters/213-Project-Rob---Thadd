@@ -4,12 +4,7 @@ require_once "config.php";
 session_start();
 
 if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') {
-    $productId = $_POST['product_id'] ?? null;
     $redirectTo = $_POST['redirect_to'] ?? 'shop.php';
-
-    if (!$productId) {
-        die('No product ID');
-    }
 
     // Initialize cart if it doesn't exist
     if (!isset($_SESSION['cart'])) {

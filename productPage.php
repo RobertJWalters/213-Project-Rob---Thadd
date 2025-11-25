@@ -123,12 +123,9 @@ $_SESSION['productItem'] = $productItem;
 <!--       put logic so display this if stock for this product is 0
             <p class='text-danger fw-semibold'>Out of Stock</p>-->
             <!--      old button-->
-<!--            <form method="POST">-->
-<!--                <button class='add-btn' type="submit" name="action" value="addToCart">ADD TO CART</button>-->
-<!--            </form>-->
+
 
             <form method="POST" action="add_to_cart.php">
-                <input type="hidden" name="product_id" value="<?php echo $productItem->getId();?>">
                 <input type="hidden" name="redirect_to" value="<?php echo 'productPage.php?id=' . $productItem->getId();?>">
                 <button class='add-btn' type="submit">ADD TO CART</button>
             </form>
