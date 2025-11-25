@@ -120,9 +120,9 @@ $_SESSION['productItem'] = $productItem;
                 <option>With 105mm Lens</option>
             </select>
 
-<!--       put logic so display this if stock for this product is 0
-            <p class='text-danger fw-semibold'>Out of Stock</p>-->
-            <!--      old button-->
+
+            <p class='fw-semibold'><?php $qty = $productItem->getStockQuantity();
+            echo $qty > 0 ? $qty . " in stock" : "Out of Stock"?></p>
 
 
             <form method="POST" action="add_to_cart.php">

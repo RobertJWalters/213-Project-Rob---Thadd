@@ -23,6 +23,7 @@ if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') 
     try {
         $cart->addProduct($product);
         $_SESSION['cart'] = $cart;
+        //if user logged in, write cart to db
 
     } catch (Exception $e) {
         echo $e->getMessage();
