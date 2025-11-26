@@ -21,7 +21,8 @@ class ProductRepo implements Repo{
                 $row['name'],
                 $row['description'],
                 $row['price'],
-                $row['category']
+                $row['category'],
+                $row['stock_quantity']
         );
     }
 
@@ -40,12 +41,64 @@ class ProductRepo implements Repo{
                 $row['name'],
                 $row['description'],
                 $row['price'],
-                $row['category']
+                $row['category'],
+                $row['stock_quantity']
             );
         }
         return $products;
     }
 
-    //Maybe add find all of certain category functions?
+
+    public function insertProduct($id, $name, $desc, $price, $category, $stockQuantity){
+        $query = "INSERT INTO products (product_id, name, description, price, category, quantity) VALUES
+(?, ?, ?, ?, ?, ?), ";
+        $stmt = $this->database->prepare($query);
+        $stmt->execute();
+        $res = $stmt->get_result();
+        //if $res failed, return something
+// if (!$stmt) {
+//            $error = 'Prepare failed: ' . $mysqli->error;
+//        } else {
+//            $stmt->bind_param('sss', $name, $email, $message);
+//            if ($stmt->execute()) {
+//                $success = 'Contact inserted successfully!';
+//            } else {
+//                if ($mysqli->errno == 1062) { // duplicate key
+//                    $error = 'Email already exists. Try a different one.';
+//                } else {
+//                    $error = 'Insert failed: ' . $mysqli->error;
+//                }
+//            }
+//            $stmt->close();
+//        }
+
+    }
+
+    public function updateProductStockQuantity($product_id, $newQuantity){
+        $query = "UPDATE products SET stock_quantity = ? WHERE product_id = ?";
+        // $stmt = $mysqli->prepare($sql);
+        //        if (!$stmt) {
+        //            $error = 'Prepare failed: ' . $mysqli->error;
+        //        } else {
+        //            $stmt->bind_param('sss', $name, $message, $email);
+        //            if ($stmt->execute()) {
+        //                if ($stmt->affected_rows > 0) {
+        //                    $success = 'Record updated successfully.';
+        //                } else {
+        //                    $error = 'No changes made or record not found.';
+        //                }
+        //            } else {
+        //                $error = 'Update failed: ' . $mysqli->error;
+        //            }
+        //            $stmt->close();
+        //        }
+    }
+
+    public function delete($id)
+    {
+        $query = "DELETE FROM users WHERE id = ?";
+        $stmt = $this->database->prepare($query);
+        return $stmt->execute([$id]);  //is this right?
+    }
 
 }

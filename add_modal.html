@@ -1,0 +1,46 @@
+<div id="productModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Add New Product</h2>
+            <button class="close-btn" onclick="closeModal()">&times;</button>
+        </div>
+
+<!--        <input type="hidden" name="redirect_to" value="<?php echo 'productPage.php?id=' . $productItem->getId();?>">
+                <button class='add-btn' type="submit">ADD TO CART</button>-->
+        <form method="POST" action="add_product.php">
+
+            <div class="form-group">
+                <label>Product Name</label>
+                <input type="text" name="product_name" required>
+            </div>
+            <div class="form-group">
+                <label>Product ID</label>
+                <input type="text" name="product_id" required>
+            </div>
+            <div class="form-group">
+                <label>Price</label>
+                <input type="number" name="price" step="0.01" min="0" required>
+            </div>
+            <div class="form-group">
+                <label>Quantity</label>
+                <input type="number" name="quantity" min="0" required>
+            </div>
+            <div class="form-group">
+                <label>Category</label>
+                <select name="category" required>
+                    <option value="">None.</option>
+                    <option value="in_stock">Y Series</option>
+                    <option value="low_stock">Large Format</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Description</label>
+                <input type="text" name="description">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-cancel" onclick="closeModal()">Cancel</button>
+                <button type="submit" class="btn btn-submit">Add Product</button>
+            </div>
+        </form>
+    </div>
+</div>

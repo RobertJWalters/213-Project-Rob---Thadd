@@ -8,14 +8,14 @@ class ProductClass
     private $desc;
     private $stockQuantity;
 
-    public function __construct($id, $name, $desc, $price, $category)
+    public function __construct($id, $name, $desc, $price, $category, $stockQuantity)
     {
         $this->name = $name;
         $this->id = $id;
         $this->price = $price;
         $this->category = $category;
         $this->desc = $desc;
-        $this->stockQuantity = 1;
+        $this->stockQuantity = $stockQuantity;
     }
 
     public function getName(){
@@ -35,6 +35,11 @@ class ProductClass
     }
     public function getStockQuantity(){
         return $this->stockQuantity;
+    }
+
+    public function setStockQuantity($stockQuantity)
+    {
+        $this->stockQuantity = $stockQuantity;
     }
 
     public function incrementStockQuantity(){

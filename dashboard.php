@@ -36,6 +36,7 @@ if ($mysqli === null) {
     <title>Admin Dashboard</title>
     <link rel="stylesheet" href="./styles.css">
     <link rel="stylesheet" href="./dashboard.css">
+    <script src="dashboard.js"></script>
 </head>
 
 <body>
@@ -49,7 +50,7 @@ if ($mysqli === null) {
     <div class="nav-right">
         <a href="#">ABOUT</a>
         <a href="#" class="cart">
-            <p>Q</p> <!-- replace with icon-->
+            <p>LOGOUT</p> <!-- logout function implement-->
             <span class="cart-badge"></span>
         </a>
     </div>
@@ -82,7 +83,10 @@ if ($mysqli === null) {
     <div class="admin-controls">
         <div class="controls-header">
             <h2>Products</h2>
-            <button class="add-product-btn">+ Add New Product</button>
+<!--            <form class="add-product" method="POST" action="add_stock.php">-->
+<!--                <input type="hidden" name="redirect_to" value="dashboard.php">-->
+<!--            </form>-->
+            <button class="add-product-btn" onclick="loadModal()">+ Add New Product</button>
         </div>
 
         <!-- Alert Messages -->
@@ -105,11 +109,10 @@ if ($mysqli === null) {
             <?php
             foreach($data as $d){
                 $quantity = rand(0, 50); // Replace with actual quantity
+
                 $status = 'in-stock';
                 if ($quantity == 0) {
                     $status = 'out-of-stock';
-                } elseif ($quantity < 5) {
-                    $status = 'low-stock';
                 }
 
                 echo "<tr data-product-id='" . $d->getId() . "'>
@@ -127,7 +130,6 @@ if ($mysqli === null) {
                             <td><span class='status-badge status-" . $status . "'>" . ucfirst(str_replace('-', ' ', $status)) . "</span></td>
                             <td>
                                 <div class='action-buttons'>
-                                    <button class='edit-btn' data-id='" . $d->getId() . "'>Edit</button>
                                     <button class='delete-btn' data-id='" . $d->getId() . "'>Delete</button>
                                 </div>
                             </td>
