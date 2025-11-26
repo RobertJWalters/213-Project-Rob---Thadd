@@ -5,10 +5,8 @@
             <button class="close-btn" onclick="closeModal()">&times;</button>
         </div>
 
-<!--        <input type="hidden" name="redirect_to" value="<?php echo 'productPage.php?id=' . $productItem->getId();?>">
-                <button class='add-btn' type="submit">ADD TO CART</button>-->
-        <form method="POST" action="add_product.php">
-
+        <form method="POST" action="add_stock.php">
+<!--            <input type="hidden" name="redirect_to" value="dashboard.php">-->
             <div class="form-group">
                 <label>Product Name</label>
                 <input type="text" name="product_name" required>
