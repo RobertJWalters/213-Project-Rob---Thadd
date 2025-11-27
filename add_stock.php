@@ -1,4 +1,7 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('log_errors', 1);
+error_reporting(E_ALL);
 
 require_once "config.php";
 session_start();
@@ -13,10 +16,21 @@ if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') 
     $stockQuantity = $_POST['quantity'] ?? null;
 
 
+    // some error tests
+    $errors = [];
+    if (empty($id)) $errors[] = "ID is required";
+    if (empty($name)) $errors[] = "Name is required";
+    if (empty($price)) $errors[] = "Price is required";
+    if (empty($category)) $errors[] = "Category is required";
+    if (empty($stockQuantity)) $errors[] = "Quantity is required";
+
+
     try {
         $mysqli = db::getDB();
     } catch (Error $e) {
-        $mysqli = null;
+        $_SESSION['errors'] = ["Database connection failed: " . $e->getMessage()];
+        header('Location: ' . $redirectTo);
+        exit;
     }
 
 // Fallback to array database if no connection just for testing, make sure to DELETE
@@ -41,6 +55,7 @@ if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') 
         $prodRepo->insertProduct($id, $name, $desc, $price, $category, $stockQuantity);
     } catch (Exception $e) {
         echo $e->getMessage();
+        echo 'ERROR on add_stock.php';
     }
 
     header('Location: ' . $redirectTo);
