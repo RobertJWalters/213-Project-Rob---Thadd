@@ -51,27 +51,15 @@ class ProductRepo implements Repo{
 
     public function insertProduct($id, $name, $desc, $price, $category, $stockQuantity){
         $query = "INSERT INTO products (product_id, name, description, price, category, quantity) VALUES
-(?, ?, ?, ?, ?, ?), ";
+(?, ?, ?, ?, ?, ?)";
         $stmt = $this->database->prepare($query);
+        $stmt->bind_param("i", $id);
+        $stmt->bind_param("s", $name);
+        $stmt->bind_param("s", $desc);
+        $stmt->bind_param("i", $price);
+        $stmt->bind_param("s", $category);
+        $stmt->bind_param("i", $stockQuantity);
         $stmt->execute();
-//        $res = $stmt->get_result();
-        //if $res failed, return something
-// if (!$stmt) {
-//            $error = 'Prepare failed: ' . $mysqli->error;
-//        } else {
-//            $stmt->bind_param('sss', $name, $email, $message);
-//            if ($stmt->execute()) {
-//                $success = 'Contact inserted successfully!';
-//            } else {
-//                if ($mysqli->errno == 1062) { // duplicate key
-//                    $error = 'Email already exists. Try a different one.';
-//                } else {
-//                    $error = 'Insert failed: ' . $mysqli->error;
-//                }
-//            }
-//            $stmt->close();
-//        }
-
     }
 
     public function updateProductStockQuantity($product_id, $newQuantity){
@@ -98,7 +86,8 @@ class ProductRepo implements Repo{
     {
         $query = "DELETE FROM users WHERE id = ?";
         $stmt = $this->database->prepare($query);
-        return $stmt->execute([$id]);  //is this right?
+        $stmt->bind_param("i", $id);
+        return $stmt->execute();  //is this right?
     }
 
 }
