@@ -16,6 +16,7 @@ if ($mysqli === null) {
 } else {
     $prodRepo = new ProductRepo($mysqli);
     $data = $prodRepo->findAll();
+    $_SESSION['productRepo'] = $prodRepo;
 }
 
 if (!isset($_SESSION['cart'])) {

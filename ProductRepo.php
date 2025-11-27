@@ -54,7 +54,7 @@ class ProductRepo implements Repo{
 (?, ?, ?, ?, ?, ?), ";
         $stmt = $this->database->prepare($query);
         $stmt->execute();
-        $res = $stmt->get_result();
+//        $res = $stmt->get_result();
         //if $res failed, return something
 // if (!$stmt) {
 //            $error = 'Prepare failed: ' . $mysqli->error;

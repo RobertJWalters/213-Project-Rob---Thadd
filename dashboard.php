@@ -98,7 +98,7 @@ if ($mysqli === null) {
             <tbody id="productsTableBody">
             <?php
             foreach($data as $d){
-                $quantity = rand(0, 50); // Replace with actual quantity
+                $quantity = $d->getStockQuantity();
 
                 $status = 'in-stock';
                 if ($quantity == 0) {
@@ -106,7 +106,7 @@ if ($mysqli === null) {
                 }
 
                 echo "<tr data-product-id='" . $d->getId() . "'>
-                            <td><img src='prod" . $d->getId() . ".jpg' alt='Product' class='product-thumb'></td>
+                            <td><img src='/photos/prod" . $d->getId() . ".jpg' alt='Product' class='product-thumb'></td>
                             <td>" . htmlspecialchars($d->getName()) . "</td>
                             <td>#" . $d->getId() . "</td>
                             <td>\$59.99</td>
