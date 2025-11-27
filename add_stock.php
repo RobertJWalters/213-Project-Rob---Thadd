@@ -15,6 +15,8 @@ if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') 
     $category = $_POST['category'] ?? null;
     $stockQuantity = $_POST['quantity'] ?? null;
 
+    $success = true;
+
 
     // some error tests
     $errors = [];
@@ -36,6 +38,7 @@ if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') 
 // Fallback to array database if no connection just for testing, make sure to DELETE
     if ($mysqli === null) {
         echo "error";
+        $success = false;
     } else {
         $prodRepo = new ProductRepo($mysqli);
         $data = $prodRepo->findAll();
@@ -49,16 +52,26 @@ if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') 
 //    $productRepo = $_SESSION['productRepo'] ?? null;
 
     if (!$prodRepo) {
+        $success = false;
         die('ERROR on add_stock.php');
+
     }
     try {
         $prodRepo->insertProduct($id, $name, $desc, $price, $category, $stockQuantity);
     } catch (Exception $e) {
         echo $e->getMessage();
         echo 'ERROR on add_stock.php';
+        $success = false;
     }
 
-    header('Location: ' . $redirectTo);
-    exit;
+    if($success){
+        header('Location: ' . $redirectTo);
+        exit;
+    }
+
 }
+foreach($errors as $error){
+    echo $error;
+}
+echo "error on add_stock.php ";
 ?>
