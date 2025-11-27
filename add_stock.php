@@ -8,7 +8,7 @@ session_start();
 
 if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') {
     $redirectTo = $_POST['redirect_to'] ?? 'dashboard.php';
-    $id = $_POST['id'] ?? null;
+//    $id = $_POST['id'] ?? null;
     $name = $_POST['name'] ?? null;
     $desc = $_POST['desc'] ?? null;
     $price = $_POST['price'] ?? null;
@@ -20,7 +20,7 @@ if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') 
 
     // some error tests
     $errors = [];
-    if (empty($id)) $errors[] = "ID is required";
+//    if (empty($id)) $errors[] = "ID is required";
     if (empty($name)) $errors[] = "Name is required";
     if (empty($price)) $errors[] = "Price is required";
     if (empty($category)) $errors[] = "Category is required";
@@ -57,7 +57,7 @@ if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') 
 
     }
     try {
-        $prodRepo->insertProduct($id, $name, $desc, $price, $category, $stockQuantity);
+        $prodRepo->insertProduct($name, $desc, $price, $category, $stockQuantity);
     } catch (Exception $e) {
         echo $e->getMessage();
         echo 'ERROR on add_stock.php';

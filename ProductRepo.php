@@ -49,16 +49,10 @@ class ProductRepo implements Repo{
     }
 
 
-    public function insertProduct($id, $name, $desc, $price, $category, $stockQuantity){
-        $query = "INSERT INTO products (product_id, name, description, price, category, quantity) VALUES
-(?, ?, ?, ?, ?, ?)";
+    public function insertProduct($name, $desc, $price, $category, $stockQuantity){
+        $query = "INSERT INTO products (name, description, price, category, stock_quantity) VALUES (?, ?, ?, ?, ?)";
         $stmt = $this->database->prepare($query);
-        $stmt->bind_param("i", $id);
-        $stmt->bind_param("s", $name);
-        $stmt->bind_param("s", $desc);
-        $stmt->bind_param("i", $price);
-        $stmt->bind_param("s", $category);
-        $stmt->bind_param("i", $stockQuantity);
+        $stmt->bind_param("sssii", $name, $desc, $price, $category, $stockQuantity);
         $stmt->execute();
     }
 
