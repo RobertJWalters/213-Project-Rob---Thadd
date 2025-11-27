@@ -12,13 +12,33 @@ if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') 
     $category = $_POST['category'] ?? null;
     $stockQuantity = $_POST['quantity'] ?? null;
 
-    $productRepo = $_SESSION['productRepo'] ?? null;
 
-    if (!$productRepo) {
+    try {
+        $mysqli = db::getDB();
+    } catch (Error $e) {
+        $mysqli = null;
+    }
+
+// Fallback to array database if no connection just for testing, make sure to DELETE
+    if ($mysqli === null) {
+        echo "error";
+    } else {
+        $prodRepo = new ProductRepo($mysqli);
+        $data = $prodRepo->findAll();
+        $_SESSION['productRepo'] = $prodRepo;
+    }
+
+    if (!isset($_SESSION['cart'])) {
+        $_SESSION['cart'] = new CartClass(null);
+    }
+//
+//    $productRepo = $_SESSION['productRepo'] ?? null;
+
+    if (!$prodRepo) {
         die('ERROR on add_stock.php');
     }
     try {
-        $productRepo->insertProduct($id, $name, $desc, $price, $category, $stockQuantity);
+        $prodRepo->insertProduct($id, $name, $desc, $price, $category, $stockQuantity);
     } catch (Exception $e) {
         echo $e->getMessage();
     }
