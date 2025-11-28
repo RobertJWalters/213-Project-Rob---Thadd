@@ -1,5 +1,7 @@
 <?php
-
+ini_set('display_errors', 1);
+ini_set('log_errors', 1);
+error_reporting(E_ALL);
 require_once "config.php";
 session_start();
 
@@ -8,6 +10,9 @@ if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') 
     $id = $_POST['id'];
     $prodRepo = $_SESSION['prodRepo'];
     $success = true;
+
+    $errors = [];
+    if (empty($id)) $errors[] = "ID is required";
 
     if (!$prodRepo) {
         $success = false;
@@ -26,4 +31,7 @@ if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') 
         header('Location: ' . $redirectTo);
         exit;
     }
+}
+foreach($errors as $error){
+    echo $error;
 }
