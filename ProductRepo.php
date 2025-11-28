@@ -65,7 +65,7 @@ class ProductRepo implements Repo{
 
     public function delete($id)
     {
-        $query = "DELETE FROM products WHERE id = ?";
+        $query = "DELETE FROM products WHERE product_id = ?";
         $stmt = $this->database->prepare($query);
         $stmt->bind_param("i", $id);
         return $stmt->execute();  //is this right?

@@ -33,14 +33,14 @@ if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') 
 
     if (!$prodRepo) {
         $success = false;
-        die('ERROR on add_stock.php');
+        die('ERROR on delete_stock.php');
     }
 
     try {
         $prodRepo->delete($id);
     } catch (Exception $e) {
         echo $e->getMessage();
-        echo 'ERROR on add_stock.php';
+        echo 'ERROR on delete_stock.php';
         $success = false;
     }
 

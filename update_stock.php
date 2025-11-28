@@ -33,7 +33,7 @@ if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') 
 
     if (!$prodRepo) {
         $success = false;
-        die('ERROR on add_stock.php');
+        die('ERROR on update_stock.php');
     }
 
     $errors = [];
@@ -41,24 +41,24 @@ if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') 
     if (empty($quantity)) $errors[] = "quantity is required";
 
 
-        try {
-           if ($action === 'increase') {
-               $prodRepo->updateProductStockQuantity($id, $quantity + 1);
-            } elseif ($action === 'decrease') {
-               $prodRepo->updateProductStockQuantity($id, $quantity + 1);
-           }
+    try {
+        if ($action === 'increase') {
+            $prodRepo->updateProductStockQuantity($id, $quantity + 1);
+        } elseif ($action === 'decrease') {
+            $prodRepo->updateProductStockQuantity($id, $quantity - 1);
+        }
 
     } catch (Exception $e) {
         echo $e->getMessage();
-        echo 'ERROR on add_stock.php';
+        echo 'ERROR on update_stock.php';
         $success = false;
     }
 
-    if($success){
+    if ($success) {
         header('Location: ' . $redirectTo);
         exit;
     }
 }
-foreach($errors as $error){
+foreach ($errors as $error) {
     echo $error;
 }
