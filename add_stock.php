@@ -35,7 +35,7 @@ if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') 
         exit;
     }
 
-// Fallback to array database if no connection just for testing, make sure to DELETE
+
     if ($mysqli === null) {
         echo "error";
         $success = false;
@@ -45,16 +45,10 @@ if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') 
         $_SESSION['productRepo'] = $prodRepo;
     }
 
-    if (!isset($_SESSION['cart'])) {
-        $_SESSION['cart'] = new CartClass(null);
-    }
-//
-//    $productRepo = $_SESSION['productRepo'] ?? null;
 
     if (!$prodRepo) {
         $success = false;
         die('ERROR on add_stock.php');
-
     }
     try {
         $prodRepo->insertProduct($name, $desc, $price, $category, $stockQuantity);
@@ -73,5 +67,4 @@ if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') 
 foreach($errors as $error){
     echo $error;
 }
-echo "error on add_stock.php ";
 ?>

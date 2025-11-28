@@ -5,9 +5,7 @@ session_start();
 
 if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') {
     $redirectTo = $_POST['redirect_to'] ?? 'dashboard.php';
-    $action = $_POST['action'] ?? '';
     $id = $_POST['id'];
-    $quantity = $_POST['quantity'];
     $prodRepo = $_SESSION['prodRepo'];
     $success = true;
 
@@ -16,14 +14,8 @@ if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') 
         die('ERROR on add_stock.php');
     }
 
-
-        try {
-           if ($action === 'increase') {
-               $prodRepo->updateProductStockQuantity($id, $quantity + 1);
-            } elseif ($action === 'decrease') {
-               $prodRepo->updateProductStockQuantity($id, $quantity + 1);
-           }
-
+    try {
+        $prodRepo->delete($id);
     } catch (Exception $e) {
         echo $e->getMessage();
         echo 'ERROR on add_stock.php';

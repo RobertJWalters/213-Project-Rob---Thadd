@@ -58,27 +58,14 @@ class ProductRepo implements Repo{
 
     public function updateProductStockQuantity($product_id, $newQuantity){
         $query = "UPDATE products SET stock_quantity = ? WHERE product_id = ?";
-        // $stmt = $mysqli->prepare($sql);
-        //        if (!$stmt) {
-        //            $error = 'Prepare failed: ' . $mysqli->error;
-        //        } else {
-        //            $stmt->bind_param('sss', $name, $message, $email);
-        //            if ($stmt->execute()) {
-        //                if ($stmt->affected_rows > 0) {
-        //                    $success = 'Record updated successfully.';
-        //                } else {
-        //                    $error = 'No changes made or record not found.';
-        //                }
-        //            } else {
-        //                $error = 'Update failed: ' . $mysqli->error;
-        //            }
-        //            $stmt->close();
-        //        }
+        $stmt = $this->database->prepare($query);
+        $stmt->bind_param("ii", $newQuantity, $product_id);
+        $stmt->execute();
     }
 
     public function delete($id)
     {
-        $query = "DELETE FROM users WHERE id = ?";
+        $query = "DELETE FROM products WHERE id = ?";
         $stmt = $this->database->prepare($query);
         $stmt->bind_param("i", $id);
         return $stmt->execute();  //is this right?

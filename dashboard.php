@@ -15,6 +15,7 @@ if ($mysqli === null) {
     $prodRepo = new ProductRepo($mysqli);
     $data = $prodRepo->findAll();
 }
+$SESSION['prodRepo'] = $prodRepo;
 ?>
 <!-- Some code made with the help of AI tools-->
 
@@ -73,9 +74,7 @@ if ($mysqli === null) {
     <div class="admin-controls">
         <div class="controls-header">
             <h2>Products</h2>
-<!--            <form class="add-product" method="POST" action="add_stock.php">-->
-<!--                <input type="hidden" name="redirect_to" value="dashboard.php">-->
-<!--            </form>-->
+
             <button class="add-product-btn" onclick="loadModal()">+ Add New Product</button>
         </div>
 
@@ -111,17 +110,19 @@ if ($mysqli === null) {
                             <td>#" . $d->getId() . "</td>
                             <td>\$59.99</td>
                             <td>
-                                <div class='quantity-controls'>
-                                    <button class='qty-btn minus-btn' data-id='" . $d->getId() . "'>−</button>
-                                    <input type='number' class='quantity-input' value='" . $quantity . "' data-id='" . $d->getId() . "' min='0'>
-                                    <button class='qty-btn plus-btn' data-id='" . $d->getId() . "'>+</button>
-                                </div>
+                                <form class='quantity-controls' method='POST' action='update_stock.php'>
+                                    <input type='hidden' name='id' value='" . $d->getId() . "'>
+                                    <button class='qty-btn minus-btn' name='action' value='decrease' type='submit'>−</button>
+                                    <input type='number' class='quantity-input' name='quantity' value='" . $quantity . "' min='0'>
+                                    <button class='qty-btn plus-btn' name='action' value='increase' type='submit'>+</button>
+                                </form>
                             </td>
                             <td><span class='status-badge status-" . $status . "'>" . ucfirst(str_replace('-', ' ', $status)) . "</span></td>
                             <td>
-                                <div class='action-buttons'>
-                                    <button class='delete-btn' data-id='" . $d->getId() . "'>Delete</button>
-                                </div>
+                                <form class='action-buttons' method='POST' action='delete_stock.php'>
+                                    <input type='hidden' name='id' value='" . $d->getId() . "'>
+                                    <button class='delete-btn' type='submit'>Delete</button>
+                                </form>
                             </td>
                         </tr>";
             }

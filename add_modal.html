@@ -6,15 +6,10 @@
         </div>
 
         <form method="POST" action="add_stock.php">
-<!--            <input type="hidden" name="redirect_to" value="dashboard.php">-->
+
             <div class="form-group">
                 <label>Product Name</label>
                 <input type="text" name="name" required>
-            </div>
-            <div class="form-group">
-                <label>Product ID</label>
-
-                <input type="text" name="id" required>
             </div>
             <div class="form-group">
                 <label>Price</label>
@@ -26,9 +21,8 @@
             </div>
             <div class="form-group">
                 <label>Category</label>
-<!--                <input type="hidden" name="category" value="' . $id . '">-->
                 <select name="category" required>
-                    <option value="">None.</option>
+                    <option value="none">None</option>
                     <option value="in_stock">Y Series</option>
                     <option value="low_stock">Large Format</option>
                 </select>
