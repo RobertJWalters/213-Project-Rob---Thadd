@@ -10,8 +10,26 @@ if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') 
     $action = $_POST['action'] ?? '';
     $id = $_POST['id'];
     $quantity = $_POST['quantity'];
-    $prodRepo = $_SESSION['prodRepo'];
     $success = true;
+
+
+    try {
+        $mysqli = db::getDB();
+    } catch (Error $e) {
+        $_SESSION['errors'] = ["Database connection failed: " . $e->getMessage()];
+        header('Location: ' . $redirectTo);
+        exit;
+    }
+
+
+    if ($mysqli === null) {
+        echo "error";
+        $success = false;
+    } else {
+        $prodRepo = new ProductRepo($mysqli);
+        $data = $prodRepo->findAll();
+        $_SESSION['productRepo'] = $prodRepo;
+    }
 
     if (!$prodRepo) {
         $success = false;

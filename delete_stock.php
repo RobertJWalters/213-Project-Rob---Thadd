@@ -8,8 +8,25 @@ session_start();
 if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') {
     $redirectTo = $_POST['redirect_to'] ?? 'dashboard.php';
     $id = $_POST['id'];
-    $prodRepo = $_SESSION['prodRepo'];
     $success = true;
+
+    try {
+        $mysqli = db::getDB();
+    } catch (Error $e) {
+        $_SESSION['errors'] = ["Database connection failed: " . $e->getMessage()];
+        header('Location: ' . $redirectTo);
+        exit;
+    }
+
+
+    if ($mysqli === null) {
+        echo "error";
+        $success = false;
+    } else {
+        $prodRepo = new ProductRepo($mysqli);
+        $data = $prodRepo->findAll();
+        $_SESSION['productRepo'] = $prodRepo;
+    }
 
     $errors = [];
     if (empty($id)) $errors[] = "ID is required";

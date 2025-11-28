@@ -107,8 +107,8 @@ $SESSION['prodRepo'] = $prodRepo;
                 echo "<tr data-product-id='" . $d->getId() . "'>
                             <td><img src='/photos/prod" . $d->getId() . ".jpg' alt='Product' class='product-thumb'></td>
                             <td>" . htmlspecialchars($d->getName()) . "</td>
-                            <td>#" . $d->getId() . "</td>
-                            <td>\$59.99</td>
+                            <td>ID:" . $d->getId() . "</td>
+                            <td>$ " . $d->getPrice() ." </td>
                             <td>
                                 <form class='quantity-controls' method='POST' action='update_stock.php'>
                                     <input type='hidden' name='id' value='" . $d->getId() . "'>
