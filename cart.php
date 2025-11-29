@@ -80,7 +80,7 @@ hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
                                        <input type="hidden" name="id" value="' . $id . '">
                                        <div class="quantity-control">
                                            <button class="decrease-qty" name="action" value="decrease" type="submit">−</button>
-                                            <input type="number" value="' . $product['quantity'] . '" min="1" class="qty-input">
+                                            <input type="number" value="' . $product['quantity'] . '" min="1" max="' . $product['product']->getStockQuantity() . '" class="qty-input">
                                             <button class="increase-qty" name="action" value="increase" type="submit">+</button>
                                         </div>
                                         <button class="remove" name="action" value="remove" type="submit">✕</button>

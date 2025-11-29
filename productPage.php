@@ -29,7 +29,7 @@ if ($mysqli === null) {
     }
 }
 $_SESSION['productItem'] = $productItem;
-//$_SESSION['re'] = 'productPage.php?id=' . $productItem->getId();
+$qty = $productItem->getStockQuantity();
 ?>
 <!DOCTYPE html>
 <html lang='en'>
@@ -90,23 +90,24 @@ $_SESSION['productItem'] = $productItem;
             <p class='price'>$<?php echo $productItem->getPrice(); ?></p>
 
             <label class='form-label'>MODEL:</label>
-            <select class='form-select w-auto mb-3'>
-                <option selected>Select Model</option>
-                <option>Body Only</option>
-                <option>With 20mm Lens</option>
-                <option>With 50mm Lens</option>
-                <option>With 105mm Lens</option>
-            </select>
+            <label>
+                <select class='form-select w-auto mb-3'>
+                    <option>Body Only</option>
+                    <option>With 20mm Lens</option>
+                    <option>With 50mm Lens</option>
+                    <option>With 105mm Lens</option>
+                </select>
+            </label>
 
 
-            <p class='fw-semibold'><?php $qty = $productItem->getStockQuantity();
-            echo $qty > 0 ? $qty . " in stock" : "Out of Stock"?></p>
+            <p class='fw-semibold'><?php
+            echo $qty > 0 ? $qty . " in Stock" : "<span class='text-danger'>Out of Stock</span>"?></p>
 
 
-            <form method="POST" action="add_to_cart.php">
-                <input type="hidden" name="redirect_to" value="<?php echo 'productPage.php?id=' . $productItem->getId();?>">
-                <button class='add-btn' type="submit">ADD TO CART</button>
-            </form>
+            <?php echo $qty > 0 ? "<form method='POST' action='add_to_cart.php'>
+                <input type='hidden' name='redirect_to' value='". 'productPage.php?id=' . $productItem->getId() ."'>
+                <button class='add-btn' type='submit'>ADD TO CART</button>
+            </form>" : "<button class='add-btn disabled' >ADD TO CART</button>"?>
 
             <!-- SPECS -->
             <div class='mt-4'>

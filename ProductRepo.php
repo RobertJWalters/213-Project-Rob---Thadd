@@ -28,7 +28,7 @@ class ProductRepo implements Repo{
 
     public function findAll()
     {
-        $query = "SELECT * FROM products ORDER BY product_id DESC";
+        $query = "SELECT * FROM products ORDER BY product_id";
         $stmt = $this->database->prepare($query);
         $stmt->execute();
         $res = $stmt->get_result();

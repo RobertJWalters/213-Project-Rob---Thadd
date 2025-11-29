@@ -74,7 +74,7 @@ body {
 }
 
 .add-btn {
-    background-color: #76eec6;
+    background-color: #ffd438;
     color: #000;
     font-weight: 600;
     border: none;
@@ -84,5 +84,9 @@ body {
 }
 
 .add-btn:hover {
-    background-color: #5ed3ae;
+    background-color: #aa8614;
+}
+
+.disabled {
+    background-color: #a69a6e;
 }
