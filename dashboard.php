@@ -1,8 +1,21 @@
 <?php
-require 'Product.php';
-require 'TestProdRepo.php';
-$data = TestProdRepo::init();
+require_once "config.php";
 
+
+try {
+    $mysqli = db::getDB();
+} catch (Error $e) {
+    $mysqli = null;
+}
+
+// Fallback to array database if no connection just for testing, make sure to DELETE
+if ($mysqli === null) {
+    echo "error";
+} else {
+    $prodRepo = new ProductRepo($mysqli);
+    $data = $prodRepo->findAll();
+}
+$SESSION['prodRepo'] = $prodRepo;
 ?>
 <!-- Some code made with the help of AI tools-->
 
@@ -14,6 +27,7 @@ $data = TestProdRepo::init();
     <title>Admin Dashboard</title>
     <link rel="stylesheet" href="./styles.css">
     <link rel="stylesheet" href="./dashboard.css">
+    <script src="dashboard.js"></script>
 </head>
 
 <body>
@@ -27,7 +41,7 @@ $data = TestProdRepo::init();
     <div class="nav-right">
         <a href="#">ABOUT</a>
         <a href="#" class="cart">
-            <p>Q</p> <!-- replace with icon-->
+            <p>LOGOUT</p> <!-- logout function implement-->
             <span class="cart-badge"></span>
         </a>
     </div>
@@ -60,7 +74,8 @@ $data = TestProdRepo::init();
     <div class="admin-controls">
         <div class="controls-header">
             <h2>Products</h2>
-            <button class="add-product-btn">+ Add New Product</button>
+
+            <button class="add-product-btn" onclick="loadModal()">+ Add New Product</button>
         </div>
 
         <!-- Alert Messages -->
@@ -82,32 +97,32 @@ $data = TestProdRepo::init();
             <tbody id="productsTableBody">
             <?php
             foreach($data as $d){
-                $quantity = rand(0, 50); // Replace with actual quantity
+                $quantity = $d->getStockQuantity();
+
                 $status = 'in-stock';
                 if ($quantity == 0) {
                     $status = 'out-of-stock';
-                } elseif ($quantity < 5) {
-                    $status = 'low-stock';
                 }
 
                 echo "<tr data-product-id='" . $d->getId() . "'>
-                            <td><img src='prod" . $d->getId() . ".jpg' alt='Product' class='product-thumb'></td>
+                            <td><img src='/photos/prod" . $d->getId() . ".jpg' alt='Product' class='product-thumb'></td>
                             <td>" . htmlspecialchars($d->getName()) . "</td>
-                            <td>#" . $d->getId() . "</td>
-                            <td>\$59.99</td>
+                            <td>ID:" . $d->getId() . "</td>
+                            <td>$ " . $d->getPrice() ." </td>
                             <td>
-                                <div class='quantity-controls'>
-                                    <button class='qty-btn minus-btn' data-id='" . $d->getId() . "'>−</button>
-                                    <input type='number' class='quantity-input' value='" . $quantity . "' data-id='" . $d->getId() . "' min='0'>
-                                    <button class='qty-btn plus-btn' data-id='" . $d->getId() . "'>+</button>
-                                </div>
+                                <form class='quantity-controls' method='POST' action='update_stock.php'>
+                                    <input type='hidden' name='id' value='" . $d->getId() . "'>
+                                    <button class='qty-btn minus-btn' name='action' value='decrease' type='submit'>−</button>
+                                    <input type='number' class='quantity-input' name='quantity' value='" . $quantity . "' min='0'>
+                                    <button class='qty-btn plus-btn' name='action' value='increase' type='submit'>+</button>
+                                </form>
                             </td>
                             <td><span class='status-badge status-" . $status . "'>" . ucfirst(str_replace('-', ' ', $status)) . "</span></td>
                             <td>
-                                <div class='action-buttons'>
-                                    <button class='edit-btn' data-id='" . $d->getId() . "'>Edit</button>
-                                    <button class='delete-btn' data-id='" . $d->getId() . "'>Delete</button>
-                                </div>
+                                <form class='action-buttons' method='POST' action='delete_stock.php'>
+                                    <input type='hidden' name='id' value='" . $d->getId() . "'>
+                                    <button class='delete-btn' type='submit'>Delete</button>
+                                </form>
                             </td>
                         </tr>";
             }

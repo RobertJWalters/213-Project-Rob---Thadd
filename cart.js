@@ -1,43 +1,50 @@
 $(document).ready(function() {
-    const $cart = $('.cart-sidebar');
-    const $overlay = $('#cart-overlay');
-    const $cartIcon = $('.cart');
-    const $closeBtn = $('.close-btn');
 
-    // Open cart when clicking cart icon
-    $cartIcon.on('click', function(e) {
-        e.stopPropagation();
-        $cart.addClass('active');
-        $overlay.addClass('active');
-    });
-
-    // Close cart when clicking close button
-    $closeBtn.on('click', function() {
-        $cart.removeClass('active');
-        $overlay.removeClass('active');
-    });
-
-    // Close cart when clicking overlay
-    $overlay.on('click', function() {
-        $cart.removeClass('active');
-        $overlay.removeClass('active');
-    });
-
-    // Prevent closing cart when clicking inside cart sidebar
-    $cart.on('click', function(e) {
-        e.stopPropagation();
-    });
-
-    // Close cart when clicking anywhere else on the page
-    $(document).on('click', function() {
-        $cart.removeClass('active');
-        $overlay.removeClass('active');
-    });
-
-    // Remove item functionality
-    $('.remove-btn').on('click', function() {
-        $(this).closest('.cart-item').fadeOut(300, function() {
-            $(this).remove();
-        });
-    });
+    // $(document).ready(function() {
+    //     // Increase quantity
+    //     $(document).on('click', '.increase-qty', function() {
+    //         const $input = $(this).closest('.quantity-control').find('.qty-input');
+    //         $input.val(parseInt($input.val()) + 1);
+    //         updateCart();
+    //     });
+    //
+    //     // Decrease quantity
+    //     $(document).on('click', '.decrease-qty', function() {
+    //         const $input = $(this).closest('.quantity-control').find('.qty-input');
+    //         if (parseInt($input.val()) > 1) {
+    //             $input.val(parseInt($input.val()) - 1);
+    //             updateCart();
+    //         }
+    //     });
+    //
+    //     // Remove item
+    //     $(document).on('click', '.remove-btn', function() {
+    //         $(this).closest('.cart-item').remove();
+    //         updateCart();
+    //     });
+    //
+    //     // Update cart totals
+    //     function updateCart() {
+    //         let subtotal = 0;
+    //
+    //         // $('.cart-item').each(function() {
+    //         //     const $priceText = $(this).find('.price').text();
+    //         //     const price = parseFloat($priceText.replace(/[^\d.]/g, ''));
+    //         //     const qty = parseInt($(this).find('.qty-input').val());
+    //         //     subtotal += price * qty;
+    //         // });
+    //
+    //         const tax = subtotal * 0.17;
+    //         const shipping = subtotal > 100 ? 0 : 9.99;
+    //         const total = subtotal + tax + shipping;
+    //
+    //         $('#subtotal').text('$' + subtotal.toFixed(2));
+    //         $('#tax').text('$' + tax.toFixed(2));
+    //         $('#shipping').text(shipping === 0 ? 'Free' : '$' + shipping.toFixed(2));
+    //         $('#total').text('$' + total.toFixed(2));
+    //     }
+    //
+    //     // Initial cart update
+    //     updateCart();
+    // });
 });

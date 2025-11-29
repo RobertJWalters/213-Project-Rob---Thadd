@@ -3,9 +3,9 @@
 class db{
     public static function getDB()
     {
-        $mysqli = new mysqli("localhost", "testuser", "a", "project");
+        $mysqli = new mysqli("localhost", "usr", "a", "project");
         if ($mysqli->connect_error) {
-            die('Connection failed: ' . $mysqli->connect_error);
+            return null;
         }
         $mysqli->set_charset('utf8mb4');
 

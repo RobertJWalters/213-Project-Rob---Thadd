@@ -1,5 +1,5 @@
 <?php
-class ProductRepo{
+class ProductRepo implements Repo{
 
     private $database;
 
@@ -8,24 +8,89 @@ class ProductRepo{
         $this->database = $database;
     }
 
-    public function findAll()
-    {
-        $query = "SELECT * FROM products ORDER BY id DESC";
+    public function findProductByID($id){
+        $query = "SELECT * FROM products WHERE product_id = ? LIMIT 1";
         $stmt = $this->database->prepare($query);
+        $stmt->bind_param("i", $id);
         $stmt->execute();
-        $rows = $stmt->fetchAll(MYSQLI_ASSOC);
+        $res = $stmt->get_result();
+        $row = $res->fetch_assoc();
 
-        $products = [];
-        foreach ($rows as $row) {
-            $products[] = new Product(
+        return new ProductClass(
                 $row['product_id'],
                 $row['name'],
                 $row['description'],
                 $row['price'],
-                $row['category']
+                $row['category'],
+                $row['stock_quantity']
+        );
+    }
+
+    public function findAll(): array
+    {
+        $query = "SELECT * FROM products ORDER BY product_id";
+        $stmt = $this->database->prepare($query);
+        $stmt->execute();
+        $res = $stmt->get_result();
+        $rows = $res->fetch_all(MYSQLI_ASSOC);
+
+        $products = [];
+        foreach ($rows as $row) {
+            $products[] = new ProductClass(
+                $row['product_id'],
+                $row['name'],
+                $row['description'],
+                $row['price'],
+                $row['category'],
+                $row['stock_quantity']
             );
         }
         return $products;
+    }
+
+    public function findByCategory($category): array
+    {
+        $query = "SELECT * FROM products WHERE category = ? ORDER BY product_id";
+        $stmt = $this->database->prepare($query);
+        $stmt->bind_param("s", $category);
+        $stmt->execute();
+        $res = $stmt->get_result();
+        $rows = $res->fetch_all(MYSQLI_ASSOC);
+
+        $products = [];
+        foreach ($rows as $row) {
+            $products[] = new ProductClass(
+                $row['product_id'],
+                $row['name'],
+                $row['description'],
+                $row['price'],
+                $row['category'],
+                $row['stock_quantity']
+            );
+        }
+        return $products;
+    }
+
+
+    public function insertProduct($name, $desc, $price, $category, $stockQuantity){
+        $query = "INSERT INTO products (name, description, price, category, stock_quantity) VALUES (?, ?, ?, ?, ?)";
+        $stmt = $this->database->prepare($query);
+        $stmt->bind_param("sssii", $name, $desc, $price, $category, $stockQuantity);
+        $stmt->execute();
+    }
+
+    public function updateProductStockQuantity($product_id, $newQuantity){
+        $query = "UPDATE products SET stock_quantity = ? WHERE product_id = ?";
+        $stmt = $this->database->prepare($query);
+        $stmt->bind_param("ii", $newQuantity, $product_id);
+        $stmt->execute();
+    }
+
+    public function delete($id){
+        $query = "DELETE FROM products WHERE product_id = ?";
+        $stmt = $this->database->prepare($query);
+        $stmt->bind_param("i", $id);
+        return $stmt->execute();
     }
 
 }

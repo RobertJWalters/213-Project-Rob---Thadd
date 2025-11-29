@@ -1,12 +1,35 @@
 <?php
-require 'Product.php';
-require 'TestProdRepo.php';
-include  'cart.php';
-//$data = TestProdRepo::init();
-require_once __DIR__ . '/db.php';
-$mysqli = db::getDB();
-$prodRepo = new ProductRepo($mysqli);
-$data = $prodRepo->findAll();
+
+require_once "config.php";
+session_start();
+
+
+try {
+    $mysqli = db::getDB();
+} catch (Error $e) {
+    $mysqli = null;
+}
+$category = $_GET['category'] ?? null;
+
+// Fallback to array database if no connection just for testing, make sure to DELETE
+if ($mysqli === null) {
+    echo "error";
+} else {
+    $prodRepo = new ProductRepo($mysqli);
+    if ($category == "all" || $category == null) {
+        $data = $prodRepo->findAll();
+    } else {
+        $data = $prodRepo->findByCategory($category);
+    }
+
+    $_SESSION['productRepo'] = $prodRepo;
+}
+
+if (!isset($_SESSION['cart'])) {
+    $_SESSION['cart'] = new CartClass(null);
+}
+
+
 ?>
 
 <!DOCTYPE html>
@@ -17,10 +40,12 @@ $data = $prodRepo->findAll();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rhad Cameras - Shop</title>
     <link rel="stylesheet" href="./styles.css">
+    <link rel="stylesheet" href="cart.css">
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-
 hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     <script src="cart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!--    <script src="cart.js"></script>-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
@@ -32,12 +57,13 @@ hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     </div>
 
     <div class="nav-right">
-        <a href="#" data-bs-toggle="modal" data-bs-target="#loginModal" class="nav-login">LOGIN</a>
         <a href="#">ABOUT</a>
-        <a hreft="#" class="cart">
-            <p>Q</p> <!-- replace with icon-->
-            <span class="cart-badge"></span>
-        </a>
+        <a href="#" data-bs-toggle="modal" data-bs-target="#loginModal" class="nav-login">LOGIN</a>
+        <div class="cart">
+            <a href="cart.php" class="cart-icon">
+                <img src="/photos/cart.png" alt="Cart" class="cart-image">
+            </a>
+        </div>
     </div>
 </nav>
 
@@ -51,11 +77,11 @@ hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 <!-- Filter Section -->
 <section class="filter-section">
     <div class="container">
-        <div class="filter-buttons">
-            <button class="filter-btn active">All</button>
-            <button class="filter-btn">Y Series</button>
-            <button class="filter-btn">Large Format</button>
-        </div>
+        <form class="filter-buttons" method="GET" action="shop.php">
+            <button class="filter-btn active" name="category" value="all" type="submit">All</button>
+            <button class="filter-btn" name="category" value="Y Series" type="submit">Y Series</button>
+            <button class="filter-btn" name="category" value="Large Format" type="submit">Large Format</button>
+        </form>
     </div>
 </section>
 
@@ -63,13 +89,17 @@ hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 <section class="products">
     <div class="container">
         <div class="product-grid">
-            <!-- -->
+            <!-- Dynamically load products -->
             <?php
-            foreach($data as $d){
-                echo "<div class='product-card'>" .
-                        "<img src='prod" . $d->getId() . ".jpg' alt='Product? id' class='product-image'>
-                . <h3 class='product-name'>". $d->getName() . "</h3>
-                <p class='product-price'>". $d->getPrice() . "</p>
+            //            $data = $prodRepo->findAll();
+            foreach ($data as $d) {
+                $id = $d->getId();
+                echo "<div class='product-card'>
+                <a href='productPage.php?id=" . $id . "'>" .
+                        "<img src='/photos/prod" . $id . ".jpg' alt='Product? id' class='product-image'>
+                . <h3 class='product-name'>" . $d->getName() . "</h3>
+                <p class='product-price'>$" . $d->getPrice() . "</p>
+                </a>
             </div> ";
             }
             ?>
@@ -79,41 +109,41 @@ hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 </section>
 <!-- LOGIN MODAL -->
 <div class="modal fade" id="loginModal" tabindex="-1">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content" style="border-radius: 15px; padding: 10px;">
-      
-      <div class="modal-header border-0">
-        <h5 class="modal-title">Account</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" style="border-radius: 15px; padding: 10px;">
 
-      <div class="modal-body">
-        <form action="dashboard.php" method="POST">
+            <div class="modal-header border-0">
+                <h5 class="modal-title">Account</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
 
-          <div class="mb-3">
-            <label class="form-label">Email</label>
-            <input type="email" name="email" class="form-control" placeholder="you@example.com" required>
-          </div>
+            <div class="modal-body">
+                <form action="dashboard.php" method="POST">
 
-          <div class="mb-3">
-            <label class="form-label">Password</label>
-            <input type="password" name="password" class="form-control" placeholder="••••••••" required>
-          </div>
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" name="email" class="form-control" placeholder="you@example.com" required>
+                    </div>
 
-          <button type="submit" class="btn w-100" 
-          style="background:#76eec6; font-weight:bold;">
-            Login
-          </button>
+                    <div class="mb-3">
+                        <label class="form-label">Password</label>
+                        <input type="password" name="password" class="form-control" placeholder="••••••••" required>
+                    </div>
 
-        </form>
-      </div>
+                    <button type="submit" class="btn w-100"
+                            style="background:#76eec6; font-weight:bold;">
+                        Login
+                    </button>
 
-      <div class="modal-footer border-0">
-        <a href="#" class="small">Forgot Password?</a>
-      </div>
+                </form>
+            </div>
 
+            <div class="modal-footer border-0">
+                <a href="#" class="small">Forgot Password?</a>
+            </div>
+
+        </div>
     </div>
-  </div>
 </div>
 
 </body>
