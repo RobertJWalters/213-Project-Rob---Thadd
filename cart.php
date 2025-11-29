@@ -66,7 +66,7 @@ hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
                     </div>';
             } else {
                 foreach ($data as $productId => $product) {
-                        $subTotal += $product['price'] * $product['quantity'];
+                        $subTotal += $product['product']->getPrice() * $product['quantity'];
                         $id = $product['product']->getId();
                         $name = $product['product']->getName();
                         $formattedPrice = number_format($product['product']->getPrice(), 2, '.', ',');
