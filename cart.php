@@ -23,7 +23,7 @@ if (!isset($_SESSION['cart'])) {
     }
 
 }
-//}
+$subTotal = 0;
 
 ?>
 
@@ -66,9 +66,10 @@ hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
                     </div>';
             } else {
                 foreach ($data as $productId => $product) {
+                        $subTotal += $product['price'] * $product['quantity'];
                         $id = $product['product']->getId();
                         $name = $product['product']->getName();
-                        $formattedPrice = number_format($product['product']->getPrice() / 1, 2, '.', ',');
+                        $formattedPrice = number_format($product['product']->getPrice(), 2, '.', ',');
                         $stockQty = $product['product']->getStockQuantity();
 
                         echo '<div class="cart-item">
@@ -108,19 +109,19 @@ hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
             <div class="summary">
                 <div class="summary-row">
                     <span>Subtotal</span>
-                    <span id="subtotal">$0.00</span>
+                    <span id="subtotal">$<?php echo $subTotal?></span>
                 </div>
                 <div class="summary-row">
                     <span>Shipping</span>
-                    <span id="shipping">Calculated</span>
+                    <span id="shipping">Always Free!</span>
                 </div>
                 <div class="summary-row">
                     <span>Tax</span>
-                    <span id="tax">$0.00</span>
+                    <span id="tax">$<?php $tax = $subTotal * 0.25; echo $tax?></span>
                 </div>
                 <div class="summary-row total">
                     <span>Total</span>
-                    <span id="total">$0.00</span>
+                    <span id="total">$<?php echo $subTotal + $tax?></span>
                 </div>
             </div>
 
