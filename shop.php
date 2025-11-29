@@ -9,16 +9,16 @@ try {
 } catch (Error $e) {
     $mysqli = null;
 }
-$category = $_GET['category'];
+$category = $_GET['category'] ?? null;
 
 // Fallback to array database if no connection just for testing, make sure to DELETE
 if ($mysqli === null) {
     echo "error";
 } else {
     $prodRepo = new ProductRepo($mysqli);
-    if($category == "all"){
+    if ($category == "all" || $category == null) {
         $data = $prodRepo->findAll();
-    }else{
+    } else {
         $data = $prodRepo->findByCategory($category);
     }
 
@@ -28,8 +28,6 @@ if ($mysqli === null) {
 if (!isset($_SESSION['cart'])) {
     $_SESSION['cart'] = new CartClass(null);
 }
-
-
 
 
 ?>
@@ -47,7 +45,7 @@ if (!isset($_SESSION['cart'])) {
 hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     <script src="cart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<!--    <script src="cart.js"></script>-->
+    <!--    <script src="cart.js"></script>-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
@@ -80,9 +78,9 @@ hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 <section class="filter-section">
     <div class="container">
         <form class="filter-buttons" method="GET" action="shop.php">
-            <button class="filter-btn active" name="action" value="all" type="submit">All</button>
-            <button class="filter-btn" name="action" value="Y Series" type="submit">Y Series</button>
-            <button class="filter-btn" name="action" value="Large Format" type="submit">Large Format</button>
+            <button class="filter-btn active" name="category" value="all" type="submit">All</button>
+            <button class="filter-btn" name="category" value="Y Series" type="submit">Y Series</button>
+            <button class="filter-btn" name="category" value="Large Format" type="submit">Large Format</button>
         </form>
     </div>
 </section>
@@ -93,7 +91,7 @@ hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
         <div class="product-grid">
             <!-- Dynamically load products -->
             <?php
-//            $data = $prodRepo->findAll();
+            //            $data = $prodRepo->findAll();
             foreach ($data as $d) {
                 $id = $d->getId();
                 echo "<div class='product-card'>
