@@ -9,9 +9,8 @@ try {
 } catch (Error $e) {
     $mysqli = null;
 }
-$category = $_GET['category'] ?? null;
+$category = htmlspecialchars($_GET['category'] ?? null, ENT_QUOTES, 'UTF-8');
 
-// Fallback to array database if no connection just for testing, make sure to DELETE
 if ($mysqli === null) {
     echo "error";
 } else {
@@ -21,7 +20,6 @@ if ($mysqli === null) {
     } else {
         $data = $prodRepo->findByCategory($category);
     }
-
     $_SESSION['productRepo'] = $prodRepo;
 }
 
@@ -40,12 +38,9 @@ if (!isset($_SESSION['cart'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rhad Cameras - Shop</title>
     <link rel="stylesheet" href="./styles.css">
-    <link rel="stylesheet" href="cart.css">
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-
 hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-    <script src="cart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <!--    <script src="cart.js"></script>-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
@@ -92,11 +87,11 @@ hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
             <!-- Dynamically load products -->
             <?php
             foreach ($data as $d) {
-                $id = $d->getId();
+                $id = htmlspecialchars($d->getId());
                 echo "<div class='product-card'>
                 <a href='productPage.php?id=" . $id . "'>" .
-                        "<img src='/photos/prod" . $id . ".jpg' alt='Product? id' class='product-image'>
-                . <h3 class='product-name'>" . $d->getName() . "</h3>
+                        "<img src='/photos/prod" . $id . ".jpg' alt='Product Image' class='product-image'>
+                . <h3 class='product-name'>" . htmlspecialchars($d->getName()) . "</h3>
                 <p class='product-price'>$" . number_format($d->getPrice(), 2, '.', ',') . "</p>
                 </a>
             </div> ";

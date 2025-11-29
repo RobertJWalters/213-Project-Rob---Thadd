@@ -16,7 +16,7 @@ if ($mysqli === null) {
     // Use database if available
     $productRepo = new ProductRepo($mysqli);
     if (isset($_GET['id'])) {
-        $id = $_GET['id'];
+        $id = htmlspecialchars($_GET['id'], ENT_QUOTES, 'UTF-8');
         $productItem = $productRepo->findProductByID($id);
 
         if ($productItem === null) {
@@ -80,12 +80,12 @@ $qty = $productItem->getStockQuantity();
 
         <!-- LEFT: IMAGE -->
         <div class='col-md-6 text-center'>
-            <?php echo "<img src='/photos/prod".  $productItem->getId() . ".jpg' class='product-image' alt='Camera'>"?>
+            <?php echo "<img src='/photos/prod".  htmlspecialchars($productItem->getId()) . ".jpg' class='product-image' alt='Camera'>"?>
         </div>
 
         <!-- RIGHT: DETAILS -->
         <div class='col-md-6'>
-            <h2 class='fw-bold' id='name'><?php echo $productItem->getName(); ?></h2>
+            <h2 class='fw-bold' id='name'><?php echo htmlspecialchars($productItem->getName()); ?></h2>
 
             <p class='price'>$<?php echo number_format($productItem->getPrice(),2, '.', ','); ?></p>
 
@@ -105,15 +105,15 @@ $qty = $productItem->getStockQuantity();
 
 
             <?php echo $qty > 0 ? "<form method='POST' action='add_to_cart.php'>
-                <input type='hidden' name='redirect_to' value='". 'productPage.php?id=' . $productItem->getId() ."'>
+                <input type='hidden' name='redirect_to' value='". 'productPage.php?id=' . htmlspecialchars($productItem->getId()) ."'>
                 <button class='add-btn' type='submit'>ADD TO CART</button>
             </form>" : "<button class='add-btn disabled' >ADD TO CART</button>"?>
 
             <!-- SPECS -->
             <div class='mt-4'>
                 <p class='spec-label'>Series:</p>
-                <p class='series'><?php echo $productItem->getCategory(); ?></p>
-                <p class='desc'><?php echo nl2br($productItem->getDesc()); ?></p>
+                <p class='series'><?php echo htmlspecialchars($productItem->getCategory()); ?></p>
+                <p class='desc'><?php echo nl2br(htmlspecialchars($productItem->getDesc())); ?></p>
             </div>
 
         </div>

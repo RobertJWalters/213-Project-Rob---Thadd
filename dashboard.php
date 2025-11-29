@@ -103,24 +103,25 @@ $SESSION['prodRepo'] = $prodRepo;
                 if ($quantity == 0) {
                     $status = 'out-of-stock';
                 }
+                $id = htmlspecialchars($d->getId());
 
-                echo "<tr data-product-id='" . $d->getId() . "'>
-                            <td><img src='/photos/prod" . $d->getId() . ".jpg' alt='Product' class='product-thumb'></td>
+                echo "<tr data-product-id='" . $id . "'>
+                            <td><img src='/photos/prod" . $id . ".jpg' alt='Product' class='product-thumb'></td>
                             <td>" . htmlspecialchars($d->getName()) . "</td>
-                            <td>ID:" . $d->getId() . "</td>
-                            <td>$ " . $d->getPrice() ." </td>
+                            <td>ID:" . $id . "</td>
+                            <td>$ " . number_format($d->getPrice(), 2, '.', ',') ." </td>
                             <td>
                                 <form class='quantity-controls' method='POST' action='update_stock.php'>
-                                    <input type='hidden' name='id' value='" . $d->getId() . "'>
+                                    <input type='hidden' name='id' value='" . $id . "'>
                                     <button class='qty-btn minus-btn' name='action' value='decrease' type='submit'>−</button>
-                                    <input type='number' class='quantity-input' name='quantity' value='" . $quantity . "' min='0'>
+                                    <input type='number' class='quantity-input' name='quantity' value='" . htmlspecialchars($quantity) . "' min='0'>
                                     <button class='qty-btn plus-btn' name='action' value='increase' type='submit'>+</button>
                                 </form>
                             </td>
                             <td><span class='status-badge status-" . $status . "'>" . ucfirst(str_replace('-', ' ', $status)) . "</span></td>
                             <td>
                                 <form class='action-buttons' method='POST' action='delete_stock.php'>
-                                    <input type='hidden' name='id' value='" . $d->getId() . "'>
+                                    <input type='hidden' name='id' value='" . $id . "'>
                                     <button class='delete-btn' type='submit'>Delete</button>
                                 </form>
                             </td>
