@@ -6,6 +6,8 @@ if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') 
     $redirectTo = $_POST['redirect_to'] ?? 'cart.php';
     $action = $_POST['action'] ?? '';
     $productId = $_POST['id'] ?? null;
+    $cartQty = $_POST['qty'] ?? null;
+    $stockQty = $_POST['stock-qty'] ?? null;
 
     // Initialize cart if it doesn't exist
     if (!isset($_SESSION['cart'])) {
@@ -26,7 +28,7 @@ if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') 
         if ($action === 'remove') {
             $cart->removeProduct($product);
             $_SESSION['cart'] = $cart;
-        } elseif ($action === 'increase') {
+        } elseif ($action === 'increase' && $stockQty > $cartQty) {
             $cart->addProduct($product);
             $_SESSION['cart'] = $cart;
         } elseif ($action === 'decrease') {
