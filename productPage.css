@@ -92,3 +92,7 @@ body {
 .disabled {
     background-color: #a69a6e;
 }
+
+.disabled .add-btn:hover {
+    background-color: #a69a6e;
+}
