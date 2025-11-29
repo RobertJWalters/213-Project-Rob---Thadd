@@ -26,10 +26,33 @@ class ProductRepo implements Repo{
         );
     }
 
-    public function findAll()
+    public function findAll(): array
     {
         $query = "SELECT * FROM products ORDER BY product_id";
         $stmt = $this->database->prepare($query);
+        $stmt->execute();
+        $res = $stmt->get_result();
+        $rows = $res->fetch_all(MYSQLI_ASSOC);
+
+        $products = [];
+        foreach ($rows as $row) {
+            $products[] = new ProductClass(
+                $row['product_id'],
+                $row['name'],
+                $row['description'],
+                $row['price'],
+                $row['category'],
+                $row['stock_quantity']
+            );
+        }
+        return $products;
+    }
+
+    public function findByCategory($category): array
+    {
+        $query = "SELECT * FROM products WHERE category = ? ORDER BY product_id";
+        $stmt = $this->database->prepare($query);
+        $stmt->bind_param("s", $category);
         $stmt->execute();
         $res = $stmt->get_result();
         $rows = $res->fetch_all(MYSQLI_ASSOC);
@@ -63,12 +86,11 @@ class ProductRepo implements Repo{
         $stmt->execute();
     }
 
-    public function delete($id)
-    {
+    public function delete($id){
         $query = "DELETE FROM products WHERE product_id = ?";
         $stmt = $this->database->prepare($query);
         $stmt->bind_param("i", $id);
-        return $stmt->execute();  //is this right?
+        return $stmt->execute();
     }
 
 }

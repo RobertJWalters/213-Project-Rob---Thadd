@@ -9,19 +9,28 @@ try {
 } catch (Error $e) {
     $mysqli = null;
 }
+$category = $_GET['category'];
 
 // Fallback to array database if no connection just for testing, make sure to DELETE
 if ($mysqli === null) {
     echo "error";
 } else {
     $prodRepo = new ProductRepo($mysqli);
-    $data = $prodRepo->findAll();
+    if($category == "all"){
+        $data = $prodRepo->findAll();
+    }else{
+        $data = $prodRepo->findByCategory($category);
+    }
+
     $_SESSION['productRepo'] = $prodRepo;
 }
 
 if (!isset($_SESSION['cart'])) {
     $_SESSION['cart'] = new CartClass(null);
 }
+
+
+
 
 ?>
 
@@ -70,11 +79,11 @@ hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 <!-- Filter Section -->
 <section class="filter-section">
     <div class="container">
-        <div class="filter-buttons">
-            <button class="filter-btn active">All</button>
-            <button class="filter-btn">Y Series</button>
-            <button class="filter-btn">Large Format</button>
-        </div>
+        <form class="filter-buttons" method="GET" action="shop.php">
+            <button class="filter-btn active" name="action" value="all" type="submit">All</button>
+            <button class="filter-btn" name="action" value="Y Series" type="submit">Y Series</button>
+            <button class="filter-btn" name="action" value="Large Format" type="submit">Large Format</button>
+        </form>
     </div>
 </section>
 
