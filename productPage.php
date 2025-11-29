@@ -87,7 +87,7 @@ $qty = $productItem->getStockQuantity();
         <div class='col-md-6'>
             <h2 class='fw-bold' id='name'><?php echo $productItem->getName(); ?></h2>
 
-            <p class='price'>$<?php echo $productItem->getPrice(); ?></p>
+            <p class='price'>$<?php echo number_format($productItem->getPrice(),2, '.', ','); ?></p>
 
             <label class='form-label'>MODEL:</label>
             <label>

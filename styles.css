@@ -98,7 +98,7 @@ nav.scrolled .logo {
 .hero {
     height: 70vh;  /*maybe make this 120vh*/
     min-height: 600px;
-    background-image: url('back.png');
+    background-image: url('photos/back.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
