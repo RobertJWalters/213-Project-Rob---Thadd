@@ -39,7 +39,7 @@ $qty = $productItem->getStockQuantity();
     <title>Product Page</title>
 
     <!-- Bootstrap -->
-<!--    <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css' rel='stylesheet'>-->
+<link href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css' rel='stylesheet'>-->
 
 
     <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css'>
@@ -50,27 +50,8 @@ $qty = $productItem->getStockQuantity();
 
 <body>
 
-<!-- NAVBAR -->
-<nav class='navbar navbar-expand-lg bg-white position-relative'>
-    <div class='container'>
+<?php include 'navbar.php'; ?>
 
-        <!-- Brand left -->
-        <a class='navbar-brand fw-bold' href='shop.php'>Rhad Cameras</a>
-
-        <!-- LINKS -->
-        <div class='nav-center'>
-            <a class='nav-link' href='shop.php'>Shop</a>
-            <a class='nav-link' href='about.php'>About</a>
-        </div>
-
-        <!-- Cart right -->
-        <a href="cart.php" class="cart-icon">
-            <img src="/photos/cart.png" alt="Cart" class="cart-image">
-        </a>
-
-
-    </div>
-</nav>
 
 <!-- PAGE CONTENT -->
 <div class='container py-5'>

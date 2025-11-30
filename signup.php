@@ -1,15 +1,20 @@
 <?php
+require_once "config.php";
 session_start();
 
 $errors = [];
 $success = false;
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $name     = htmlspecialchars(trim($_POST["name"]));
-    $email    = htmlspecialchars(trim($_POST["email"]));
+
+    $name     = trim($_POST["name"]);
+    $email    = trim($_POST["email"]);
     $password = $_POST["password"];
     $confirm  = $_POST["confirm"];
 
+    $mysqli = db::getDB();
+
+    // VALIDATION
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $errors[] = "Invalid email.";
     }
@@ -22,51 +27,108 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $errors[] = "Passwords do not match.";
     }
 
-    // Load users
-    $users = json_decode(file_get_contents("users.json"), true);
+    // CHECK IF EMAIL EXISTS
+    $check = $mysqli->prepare("SELECT email FROM users WHERE email = ?");
+    $check->bind_param("s", $email);
+    $check->execute();
+    $result = $check->get_result();
 
-    // Check if email exists
-    foreach ($users as $u) {
-        if ($u["email"] === $email) {
-            $errors[] = "Email already exists.";
-        }
+    if ($result->num_rows > 0) {
+        $errors[] = "Email already exists.";
     }
 
-    // Add new user
+    // IF NO ERRORS → INSERT INTO DB
     if (empty($errors)) {
-        $users[] = [
-                "email"    => $email,
-                "name"     => $name,
-                "password" => password_hash($password, PASSWORD_DEFAULT)
-        ];
+        $hash = password_hash($password, PASSWORD_DEFAULT);
 
-        file_put_contents("users.json", json_encode($users, JSON_PRETTY_PRINT));
+        $insert = $mysqli->prepare(
+                "INSERT INTO users (email, name, password_hash) VALUES (?, ?, ?)"
+        );
+        $insert->bind_param("sss", $email, $name, $hash);
+        $insert->execute();
+
         $success = true;
     }
 }
 ?>
 <!DOCTYPE html>
 <html lang="en">
-<head><meta charset="UTF-8"><title>Sign Up</title></head>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Sign Up</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background: #f5f5f5;
+            padding-top: 80px;
+            font-family: Inter, sans-serif;
+        }
+
+        .back-link {
+            position: absolute;
+            top: 20px;
+            left: 30px;
+            font-size: 15px;
+            font-weight: 600;
+            text-decoration: none;
+            color: black;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
 <body>
 
-<h2>Sign Up</h2>
+<!-- HOME PAGE LINK -->
+<a href="shop.php" class="back-link">← Back to Home</a>
 
-<?php if ($success): ?>
-    <p style="color:green">Account created! <a href="shop.php">Log in</a></p>
-<?php endif; ?>
+<div class="container" style="max-width: 500px;">
+    <div class="card shadow-sm p-4">
 
-<?php foreach ($errors as $e): ?>
-    <p style="color:red"><?= htmlspecialchars($e) ?></p>
-<?php endforeach; ?>
+        <h2 class="text-center mb-4">Create Account</h2>
 
-<form method="POST">
-    <input type="text" name="name" placeholder="Full Name" required><br>
-    <input type="email" name="email" placeholder="Email" required><br>
-    <input type="password" name="password" placeholder="Password" required><br>
-    <input type="password" name="confirm" placeholder="Confirm Password" required><br>
-    <button type="submit">Sign Up</button>
-</form>
+        <?php if ($success): ?>
+            <div class="alert alert-success">
+                Account created successfully!
+                <a href="shop.php" class="alert-link">Click here to log in</a>.
+            </div>
+        <?php endif; ?>
+
+        <?php foreach ($errors as $e): ?>
+            <div class="alert alert-danger"><?= htmlspecialchars($e) ?></div>
+        <?php endforeach; ?>
+
+        <form method="POST">
+            <div class="mb-3">
+                <label class="form-label">Full Name</label>
+                <input type="text" name="name" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Email Address</label>
+                <input type="email" name="email" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Password (min 6 characters)</label>
+                <input type="password" name="password" class="form-control" required>
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label">Confirm Password</label>
+                <input type="password" name="confirm" class="form-control" required>
+            </div>
+
+            <button class="btn btn-dark w-100">Create Account</button>
+        </form>
+    </div>
+</div>
 
 </body>
 </html>

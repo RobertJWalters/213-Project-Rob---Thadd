@@ -1,6 +1,7 @@
 <?php
-class ProductRepo implements Repo{
 
+class ProductRepo implements Repo
+{
     private $database;
 
     public function __construct($database)
@@ -8,7 +9,8 @@ class ProductRepo implements Repo{
         $this->database = $database;
     }
 
-    public function findProductByID($id){
+    public function findProductByID($id)
+    {
         $query = "SELECT * FROM products WHERE product_id = ? LIMIT 1";
         $stmt = $this->database->prepare($query);
         $stmt->bind_param("i", $id);
@@ -17,12 +19,12 @@ class ProductRepo implements Repo{
         $row = $res->fetch_assoc();
 
         return new ProductClass(
-                $row['product_id'],
-                $row['name'],
-                $row['description'],
-                $row['price'],
-                $row['category'],
-                $row['stock_quantity']
+            $row['product_id'],
+            $row['name'],
+            $row['description'],
+            $row['price'],
+            $row['category'],
+            $row['stock_quantity']
         );
     }
 
@@ -70,27 +72,4 @@ class ProductRepo implements Repo{
         }
         return $products;
     }
-
-
-    public function insertProduct($name, $desc, $price, $category, $stockQuantity){
-        $query = "INSERT INTO products (name, description, price, category, stock_quantity) VALUES (?, ?, ?, ?, ?)";
-        $stmt = $this->database->prepare($query);
-        $stmt->bind_param("sssii", $name, $desc, $price, $category, $stockQuantity);
-        $stmt->execute();
-    }
-
-    public function updateProductStockQuantity($product_id, $newQuantity){
-        $query = "UPDATE products SET stock_quantity = ? WHERE product_id = ?";
-        $stmt = $this->database->prepare($query);
-        $stmt->bind_param("ii", $newQuantity, $product_id);
-        $stmt->execute();
-    }
-
-    public function delete($id){
-        $query = "DELETE FROM products WHERE product_id = ?";
-        $stmt = $this->database->prepare($query);
-        $stmt->bind_param("i", $id);
-        return $stmt->execute();
-    }
-
 }

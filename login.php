@@ -1,34 +1,35 @@
 <?php
+require_once "config.php";
 session_start();
 
-$errors = [];
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $email    = htmlspecialchars(trim($_POST['email']));
-    $password = $_POST['password'];
+    $email = trim($_POST["email"]);
+    $password = $_POST["password"];
 
-    $users = json_decode(file_get_contents('users.json'), true);
+    $mysqli = db::getDB();
 
-    $found = null;
-    foreach ($users as $u) {
-        if ($u['email'] === $email) {
-            $found = $u;
-            break;
+    $stmt = $mysqli->prepare("SELECT * FROM users WHERE email = ? LIMIT 1");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $res = $stmt->get_result();
+
+    if ($res->num_rows === 1) {
+        $user = $res->fetch_assoc();
+
+        if (password_verify($password, $user["password_hash"])) {
+
+            $_SESSION["user"] = [
+                "email" => $user["email"],
+                "name"  => $user["name"]
+            ];
+
+            header("Location: shop.php");
+            exit;
         }
     }
 
-    if (!$found || !password_verify($password, $found['password'])) {
-        $_SESSION['login_error'] = 'Invalid email or password.';
-        header('Location: shop.php');
-        exit;
-    }
-
-    $_SESSION['user'] = [
-        'email' => $found['email'],
-        'name'  => $found['name']
-    ];
-
-    header('Location: shop.php');
+    $_SESSION["login_error"] = "Incorrect email or password.";
+    header("Location: shop.php");
     exit;
 }
-?>
