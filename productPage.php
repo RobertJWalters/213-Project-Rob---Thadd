@@ -39,15 +39,13 @@ $qty = $productItem->getStockQuantity();
     <title>Product Page</title>
 
     <!-- Bootstrap -->
-    <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css' rel='stylesheet'>
+<!--    <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css' rel='stylesheet'>-->
 
 
-    <!-- Icons for Cart -->
-<!--    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css'>-->
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css'>
 
     <link rel='stylesheet' href='productPage.css'>
     <link rel="stylesheet" href="cart.css">
-<!--    <script src="cart.js"></script>-->
 </head>
 
 <body>
@@ -99,10 +97,8 @@ $qty = $productItem->getStockQuantity();
                 </select>
             </label>
 
-
             <p class='fw-semibold'><?php
             echo $qty > 0 ? $qty . " in Stock" : "<span class='text-danger'>Out of Stock</span>"?></p>
-
 
             <?php echo $qty > 0 ? "<form method='POST' action='add_to_cart.php'>
                 <input type='hidden' name='redirect_to' value='". 'productPage.php?id=' . htmlspecialchars($productItem->getId()) ."'>

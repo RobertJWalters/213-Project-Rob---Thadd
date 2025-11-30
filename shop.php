@@ -15,7 +15,7 @@ if ($mysqli === null) {
     echo "error";
 } else {
     $prodRepo = new ProductRepo($mysqli);
-    if ($category === "all" || $category === null) {
+    if ($category == "all" || $category == null) {
         $data = $prodRepo->findAll();
     } else {
         $data = $prodRepo->findByCategory($category);
@@ -45,6 +45,7 @@ hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 </head>
 
 <body>
+<!-- NAVBAR -->
 <nav id="navbar">
     <div class="nav-left">
         <div class="logo">Rhad Cameras</div>
