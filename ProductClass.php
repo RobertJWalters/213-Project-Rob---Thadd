@@ -6,10 +6,18 @@ class ProductClass
     private $price;
     private $category;
     private $desc;
+<<<<<<<< HEAD:ProductClass.php
     private $stockQuantity;
 
     public function __construct($id, $name, $desc, $price, $category, $stockQuantity)
     {
+========
+
+    public function __construct($name, $id,
+                                $price = 0,
+                                $category="none",
+                                $desc="Description missing"){
+>>>>>>>> origin/Thadd:Product.php
         $this->name = $name;
         $this->id = $id;
         $this->price = $price;
@@ -37,6 +45,7 @@ class ProductClass
         return $this->stockQuantity;
     }
 
+<<<<<<<< HEAD:ProductClass.php
     public function setStockQuantity($stockQuantity)
     {
         $this->stockQuantity = $stockQuantity;
@@ -50,4 +59,6 @@ class ProductClass
         $this->stockQuantity--;
     }
 
+========
+>>>>>>>> origin/Thadd:Product.php
 }
