@@ -1,33 +1,53 @@
 <?php
+// Old code kept for backup (commented out)
+// require_once "ProductClass.php";
+// require_once "ProductRepo.php";
+// require_once "CartClass.php";
+// require_once "Repo.php";
 
-require_once "config.php";
+require_once "db.php";
+require_once "CartClass.php";
+
 session_start();
 
 
+//
+// ─── DATABASE PRODUCTS ─────────────────────────────────────────────────────────
+//
+
+// Old fallback + repo system (kept for reference, but disabled)
+/*
 try {
     $mysqli = db::getDB();
 } catch (Error $e) {
     $mysqli = null;
 }
 
-// Fallback to array database if no connection just for testing, make sure to DELETE
 if ($mysqli === null) {
     $products = [
-            1 => new ProductClass(1, "Prism LX1", "Large Format camera...\n\nMaterial: Magnesium alloy\nSensor: Full-frame CMOS 36MP\nLens Mount: RL Mount\nApprox Dimensions: 168 x 125 x 100 mm", 5000, "Large Format"),
-            2 => new ProductClass(2, "Prism LX2", "Large Format camera...\n\nMaterial: Magnesium alloy\nSensor: Medium-format CMOS 40.2MP\nLens Mount: RL Mount\nApprox Dimensions: 170 x 128 x 102 mm", 5500, "Large Format"),
-            3 => new ProductClass(3, "Horizon Y1", "Y Series camera...\n\nMaterial: Polycarbonate + aluminum\nSensor: Full-frame CMOS 24.2MP\nLens Mount: RD Mount\nApprox Dimensions: 135 x 92 x 72 mm", 2000, "Y Series"),
-            4 => new ProductClass(4, "Horizon Y2", "Y Series camera...\n\nMaterial: Polycarbonate + aluminum\nSensor: Full-frame CMOS 28MP\nLens Mount: RD Mount\nApprox Dimensions: 138 x 95 x 75 mm", 2200, "Y Series"),
-            22 => new ProductClass(22, "Prism Cyan", "Standard camera...\n\nMaterial: Magnesium alloy\nSensor: Full-frame CMOS 26MP\nLens Mount: RD Mount\nApprox Dimensions: 150 x 110 x 87 mm", 3000, "Standard"),
-            6 => new ProductClass(6, "Prism Glacier", "Standard camera...\n\nMaterial: Titanium + polycarbonate\nSensor: Full-frame CMOS 29.2MP\nLens Mount: RD Mount\nApprox Dimensions: 152 x 112 x 89 mm", 3500, "Standard"),
-            7 => new ProductClass(7, "Radiant Azure", "Standard camera...\n\nMaterial: Magnesium alloy\nSensor: Full-frame CMOS 32MP\nLens Mount: RD Mount\nApprox Dimensions: 156 x 116 x 93 mm", 3800, "Standard"),
-            8 => new ProductClass(8, "Amethyst Pro", "Standard camera...\n\nMaterial: Magnesium alloy\nSensor: Full-frame CMOS 34.2MP\nLens Mount: RD Mount\nApprox Dimensions: 160 x 120 x 97 mm", 4000, "Standard"),
+        1 => new ProductClass(...),
+        ...
     ];
     $data = array_values($products);
 } else {
     $prodRepo = new ProductRepo($mysqli);
     $data = $prodRepo->findAll();
 }
+*/
 
+// NEW: real MySQL database connection
+$mysqli = db::getDB();
+
+// Fetch products from DB
+$query = "SELECT product_id, name, price, category FROM products";
+$result = $mysqli->query($query);
+
+$data = [];
+while ($row = $result->fetch_assoc()) {
+    $data[] = $row;
+}
+
+// Setup cart if missing
 if (!isset($_SESSION['cart'])) {
     $_SESSION['cart'] = new CartClass(null);
 }
@@ -36,18 +56,21 @@ if (!isset($_SESSION['cart'])) {
 
 <!DOCTYPE html>
 <html lang="en">
-<!-- html and jquery Code made with the help of AI tools-->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rhad Cameras - Shop</title>
+
     <link rel="stylesheet" href="./styles.css">
     <link rel="stylesheet" href="cart.css">
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-
-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous"></script>
+
     <script src="cart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<!--    <script src="cart.js"></script>-->
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
@@ -55,14 +78,14 @@ hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 
 <?php include 'navbar.php'; ?>
 
-<!-- Hero Section -->
+<!-- Hero -->
 <section class="hero">
     <div class="hero-content">
         <h1 class="hero-title">SHOP</h1>
     </div>
 </section>
 
-<!-- Filter Section -->
+<!-- Filters -->
 <section class="filter-section">
     <div class="container">
         <div class="filter-buttons">
@@ -73,31 +96,33 @@ hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     </div>
 </section>
 
-<!-- Products Section -->
+<!-- Products -->
 <section class="products">
     <div class="container">
         <div class="product-grid">
-            <!-- Dynamically load products -->
+
             <?php
-//            $data = $prodRepo->findAll();
+            // Loop through DB products
             foreach ($data as $d) {
-                $id = $d->getId();
-                echo "<div class='product-card'>
-                <a href='productPage.php?id=" . $id . "'>" .
-                        "<img src='/photos/prod" . $id . ".jpg' alt='Product? id' class='product-image'>
-                . <h3 class='product-name'>" . $d->getName() . "</h3>
-                <p class='product-price'>$" . $d->getPrice() . "</p>
-                </a>
-            </div> ";
+                $id = $d['product_id'];
+
+                echo "
+                <div class='product-card'>
+                    <a href='productPage.php?id=$id'>
+                        <img src='/photos/prod$id.jpg' alt='Product $id' class='product-image'>
+                        <h3 class='product-name'>{$d['name']}</h3>
+                        <p class='product-price'>\$ {$d['price']}</p>
+                    </a>
+                </div>
+                ";
             }
             ?>
 
         </div>
     </div>
 </section>
+
 <?php include 'loginModal.php'; ?>
 
 </body>
 </html>
-
-
