@@ -40,22 +40,8 @@ hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 </head>
 
 <body>
-<nav id="navbar">
-    <div class="nav-left">
-        <div class="logo">Rhad Cameras</div>
+<?php include 'navbar.php'; ?>
 
-    </div>
-
-    <div class="nav-right">
-        <a href="#">ABOUT</a>
-        <a href="#" data-bs-toggle="modal" data-bs-target="#loginModal" class="nav-login">LOGIN</a>
-        <div class="cart">
-            <a href="cart.php" class="cart-icon">
-                <img src="/photos/cart.png" alt="Cart" class="cart-image">
-            </a>
-        </div>
-    </div>
-</nav>
 
 <!-- Hero Section -->
 <section class="hero">
