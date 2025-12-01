@@ -7,6 +7,8 @@ session_start();
 $redirect = $_POST['redirect_to'] ?? "cart.php";
 $productId = $_POST['id'];
 $action    = $_POST['action'];
+$cartQty = $_POST['qty'] ?? null;
+$stockQty = $_POST['stock-qty'] ?? null;
 
 $mysqli = db::getDB();
 $productRepo = new ProductRepo($mysqli);
@@ -16,7 +18,7 @@ $product = $productRepo->findProductByID($productId);
 $cart = $_SESSION['cart'];
 
 // session update
-if ($action === "increase") {
+if  ($action === 'increase' && $stockQty > $cartQty) {
     $cart->addProduct($product);
 } else if ($action === "decrease") {
     $cart->decreaseProductQty($product);
