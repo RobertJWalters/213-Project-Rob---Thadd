@@ -7,7 +7,6 @@ $products = null;
 $mysqli = db::getDB();
 
 
-// Use database if available
 $productRepo = new ProductRepo($mysqli);
 if (isset($_GET['id'])) {
     $id = htmlspecialchars($_GET['id'], ENT_QUOTES, 'UTF-8');

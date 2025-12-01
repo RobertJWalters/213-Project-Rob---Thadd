@@ -4,7 +4,7 @@ class CartClass
 {
     private $id;
 
-    private $products;  //asc array of products and quantities
+    private $products;  //Associative array of products and quantities
 
     private $customer;
 
