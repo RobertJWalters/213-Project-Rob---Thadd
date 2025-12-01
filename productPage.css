@@ -3,6 +3,10 @@ body {
     font-family: 'Inter', sans-serif;
 }
 
+main{
+    margin: 60px 0;
+}
+
 /* NAVBAR STYLE */
 .navbar {
     border-bottom: 1px solid #eee;

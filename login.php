@@ -23,6 +23,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 "email" => $user["email"],
                 "name"  => $user["name"]
             ];
+            if($email === "admin@rhad.com"){
+                header("Location: dashboard.php");
+                exit;
+            }
 
             header("Location: shop.php");
             exit;

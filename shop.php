@@ -1,28 +1,22 @@
-
 <?php
 include 'loginModal.php';
 require_once "config.php";
 session_start();
 
 
-try {
-    $mysqli = db::getDB();
-} catch (Error $e) {
-    $mysqli = null;
-}
+$mysqli = db::getDB();
+
 $category = htmlspecialchars($_GET['category'] ?? null, ENT_QUOTES, 'UTF-8');
 
-if ($mysqli === null) {
-    echo "error";
+
+$prodRepo = new ProductRepo($mysqli);
+if ($category == "all" || $category == null) {
+    $data = $prodRepo->findAll();
 } else {
-    $prodRepo = new ProductRepo($mysqli);
-    if ($category == "all" || $category == null) {
-        $data = $prodRepo->findAll();
-    } else {
-        $data = $prodRepo->findByCategory($category);
-    }
-    $_SESSION['productRepo'] = $prodRepo;
+    $data = $prodRepo->findByCategory($category);
 }
+$_SESSION['productRepo'] = $prodRepo;
+
 
 if (!isset($_SESSION['cart'])) {
     $_SESSION['cart'] = new CartClass(null);
