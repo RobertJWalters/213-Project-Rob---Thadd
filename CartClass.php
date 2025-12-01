@@ -28,18 +28,18 @@ class CartClass
         }
     }
 
-    public function addProduct(ProductClass $product){
+    public function addProduct(ProductClass $product, $qty = 1) {
         $id = $product->getId();
-        if(isset($this->products[$id])){
-            $this->products[$id]['quantity']++;
-        }else{
-            $this->products[$id] =[
+        if (isset($this->products[$id])) {
+            $this->products[$id]['quantity'] += $qty;
+        } else {
+            $this->products[$id] = [
                 "product" => $product,
-                "quantity" => 1
+                "quantity" => $qty
             ];
         }
-
     }
+
 
     public function removeProduct(ProductClass $product){
         $id = $product->getId();
