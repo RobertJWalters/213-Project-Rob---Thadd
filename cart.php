@@ -9,7 +9,6 @@ if (!isset($_SESSION['cart'])) {
     $cart = $_SESSION['cart'];
     try {
         $data = $cart->getProducts();
-//    echo "<br><br><br><br><br><br><br>" . var_dump($data);  //for testing
     } catch (Error $e) {
         echo "fail";
     }
