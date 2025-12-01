@@ -1,7 +1,7 @@
 <?php
 class db {
     public static function getDB() {
-        $mysqli = new mysqli("localhost", "root", "ttocseerB1!", "project");
+        $mysqli = new mysqli("localhost", "rute", "password", "proj");
 
         if ($mysqli->connect_error) {
             die("Connection failed: " . $mysqli->connect_error);

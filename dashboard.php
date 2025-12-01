@@ -2,19 +2,12 @@
 require_once "config.php";
 
 
-try {
-    $mysqli = db::getDB();
-} catch (Error $e) {
-    $mysqli = null;
-}
+$mysqli = db::getDB();
 
-// Fallback to array database if no connection just for testing, make sure to DELETE
-if ($mysqli === null) {
-    echo "error";
-} else {
-    $prodRepo = new ProductRepo($mysqli);
-    $data = $prodRepo->findAll();
-}
+
+$prodRepo = new ProductRepo($mysqli);
+$data = $prodRepo->findAll();
+
 $SESSION['prodRepo'] = $prodRepo;
 ?>
 <!-- Some code made with the help of AI tools-->
@@ -33,22 +26,11 @@ $SESSION['prodRepo'] = $prodRepo;
 <body>
 
 <!-- Admin Navbar -->
-<nav id="navbar">
-    <div class="nav-left">
-        <div class="logo">Rhad Cameras</div>
-    </div>
+<?php include "navbar.php"; ?>
 
-    <div class="nav-right">
-        <a href="#">ABOUT</a>
-        <a href="#" class="cart">
-            <p>LOGOUT</p> <!-- logout function implement-->
-            <span class="cart-badge"></span>
-        </a>
-    </div>
-</nav>
 
 <!-- Main Container -->
-<div class="container">
+<main class="container">
 
     <!-- Statistics -->
     <div class="stats-grid">
@@ -96,7 +78,7 @@ $SESSION['prodRepo'] = $prodRepo;
             </thead>
             <tbody id="productsTableBody">
             <?php
-            foreach($data as $d){
+            foreach ($data as $d) {
                 $quantity = $d->getStockQuantity();
 
                 $status = 'in-stock';
@@ -109,7 +91,7 @@ $SESSION['prodRepo'] = $prodRepo;
                             <td><img src='/photos/prod" . $id . ".jpg' alt='Product' class='product-thumb'></td>
                             <td>" . htmlspecialchars($d->getName()) . "</td>
                             <td>ID:" . $id . "</td>
-                            <td>$ " . number_format($d->getPrice(), 2, '.', ',') ." </td>
+                            <td>$ " . number_format($d->getPrice(), 2, '.', ',') . " </td>
                             <td>
                                 <form class='quantity-controls' method='POST' action='update_stock.php'>
                                     <input type='hidden' name='id' value='" . $id . "'>
@@ -131,7 +113,7 @@ $SESSION['prodRepo'] = $prodRepo;
             </tbody>
         </table>
     </div>
-</div>
+</main>
 
 
 </body>
