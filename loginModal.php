@@ -45,8 +45,10 @@ if (session_status() === PHP_SESSION_NONE) {
         </div>
     </div>
 </div>
+
+<?php
 //Loads again if info is wrong
-<?php if (!empty($_SESSION['login_error'])): ?>
+if (!empty($_SESSION['login_error'])): ?>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));

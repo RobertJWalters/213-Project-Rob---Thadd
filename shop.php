@@ -68,9 +68,12 @@ hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 <section class="filter-section">
     <div class="container">
         <form class="filter-buttons" method="GET" action="shop.php">
-            <button class="filter-btn active" name="category" value="all" type="submit">All</button>
-            <button class="filter-btn" name="category" value="Y Series" type="submit">Y Series</button>
-            <button class="filter-btn" name="category" value="Large Format" type="submit">Large Format</button>
+            <button class="filter-btn <?php if ($category !== "Y Series" && $category !== "Large Format")
+                echo "active"; ?>" name="category" value="all" type="submit">All</button>
+            <button class="filter-btn <?php if($category === "Y Series")
+                echo "active";?>" name="category" value="Y Series" type="submit">Y Series</button>
+            <button class="filter-btn <?php if($category === "Large Format")
+                echo "active";?>" name="category" value="Large Format" type="submit">Large Format</button>
         </form>
     </div>
 </section>
