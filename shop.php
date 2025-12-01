@@ -6,7 +6,7 @@ session_start();
 
 $mysqli = db::getDB();
 
-$category = htmlspecialchars($_GET['category'] ?? null, ENT_QUOTES, 'UTF-8');
+$category = htmlspecialchars($_GET['category'] ?? "", ENT_QUOTES, 'UTF-8');
 
 
 $prodRepo = new ProductRepo($mysqli);
