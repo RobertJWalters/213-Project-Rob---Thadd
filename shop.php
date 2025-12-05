@@ -27,7 +27,7 @@ if (!isset($_SESSION['cart'])) {
 
 <!DOCTYPE html>
 <html lang="en">
-<!-- html and jquery Code made with the help of AI tools-->
+<!-- html and jquery Code made with the help o-->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">

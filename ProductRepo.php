@@ -93,5 +93,14 @@ class ProductRepo implements Repo{
         $stmt->bind_param("i", $id);
         return $stmt->execute();
     }
+    public function reduceStock($product_id, $amount) {
+        $query = "UPDATE products 
+              SET stock_quantity = stock_quantity - ?
+              WHERE product_id = ?";
+        $stmt = $this->database->prepare($query);
+        $stmt->bind_param("ii", $amount, $product_id);
+        $stmt->execute();
+    }
+
 
 }
