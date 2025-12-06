@@ -1,10 +1,12 @@
 <?php
+// AI tools were used during development to assist developers
+// Robert Walters
 require_once "config.php";
 
-
+// Connect database
 $mysqli = db::getDB();
 
-
+// Initialize ProductRepo with database connection
 $prodRepo = new ProductRepo($mysqli);
 $data = $prodRepo->findAll();
 
@@ -78,6 +80,7 @@ $SESSION['prodRepo'] = $prodRepo;
             </thead>
             <tbody id="productsTableBody">
             <?php
+            // Create HTML for each product from data
             foreach ($data as $d) {
                 $quantity = $d->getStockQuantity();
 

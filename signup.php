@@ -1,4 +1,6 @@
 <?php
+// AI tools were used during development to assist developers
+// Thadd McLeod
 require_once "config.php";
 session_start();
 
@@ -11,7 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $email    = trim($_POST["email"]);
     $password = $_POST["password"];
     $confirm  = $_POST["confirm"];
-
+//    Connect database
     $mysqli = db::getDB();
 
     // VALIDATION

@@ -1,4 +1,6 @@
 <?php
+// AI tools were used during development to assist developers
+//  Thadd McLeod
 require_once "config.php";
 require_once "ProductRepo.php";
 require_once "ProductClass.php";

@@ -1,5 +1,7 @@
 
 <?php
+// AI tools were used during development to assist developers
+// Robert Walters
 class ProductRepo implements Repo{
 
     private $database;

@@ -1,4 +1,6 @@
 <?php
+// AI tools were used during development to assist developers
+// Thadd McLeod
 session_start();
 ?>
 <!DOCTYPE html>
@@ -43,7 +45,7 @@ session_start();
     /* Hero Section */
     .hero {
       height: 260px;
-      background: url('Girlwithcamera.png') center/cover no-repeat;
+      background: url('photos/aboutPhoto.png') center/cover no-repeat;
       display: flex;
       align-items: center;
       justify-content: center;

@@ -1,3 +1,5 @@
+// AI tools were used during development to assist developers
+// Robert Walters and Thadd McLeod
 async function loadModal() {
     const response = await fetch('add_modal.html');
     const html = await response.text();

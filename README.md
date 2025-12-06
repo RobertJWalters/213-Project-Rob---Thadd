@@ -1,9 +1,10 @@
 README File
-COSC 213 Final Project - Rhad Cameras
+# COSC 213 Final Project - Rhad Cameras
 
-Team Members:
-- Robert Walter
-- Thaddeaus McLeod
+## Team Members:
+### - Robert Walters
+### - Thaddeaus McLeod
+
 
 Project Overview:
 Rhad Cameras is a full-featured e-commerce website built for COSC 213. The application allows users to:
@@ -21,6 +22,7 @@ The system includes:
 - Persistent user accounts stored in the database
 - Demo user account
 - Admin login with elevated access
+
 ----------------------------------------------------------------------
 REQUIREMENTS
 ----------------------------------------------------------------------
@@ -28,8 +30,9 @@ You must have:
 - PHP 8+
 - MySQL Server
 - Apache
+
 ----------------------------------------------------------------------
-1. SETTING UP THE PROJECT FOLDER
+### 1. SETTING UP THE PROJECT FOLDER
 ----------------------------------------------------------------------
 1. Clone or download the repository.
 2. Move the project folder into your server root (e.g., htdocs for XAMPP).
@@ -39,11 +42,18 @@ You must have:
    - photos folder
    - db/schema.sql file
    - db/init.sql file
-----------------------------------------------------------------------
-2. CREATING THE DATABASE
-----------------------------------------------------------------------
-Run the following commands inside MySQL:
 
+----------------------------------------------------------------------
+### 2. CREATING THE DATABASE
+----------------------------------------------------------------------
+Run the following command:
+
+```mysql -u root -p < schema.sql```
+
+OR:
+
+Run the following commands inside MySQL:
+```
 CREATE DATABASE project;
 USE project;
 
@@ -78,23 +88,23 @@ CREATE TABLE cart_items (
     FOREIGN KEY (cart_id) REFERENCES carts(cart_id),
     FOREIGN KEY (product_id) REFERENCES products(product_id)
 );
+```
 ----------------------------------------------------------------------
-3. INSERTING DEMO PRODUCT DATA
+### 3. INSERTING DEMO PRODUCT DATA
 ----------------------------------------------------------------------
 Example insert:
-
+```
 INSERT INTO products (name, description, price, category, stock_quantity)
 VALUES ("Prism LX1", "High-end large format camera.", 8750.00, "Large Format", 12);
+```
+To load the full set of products, follow step 4.
 
-To load the full set of products using the schema file:
-
-mysql -u root -p < schema.sql
 ----------------------------------------------------------------------
-4. CREATING DEMO & ADMIN USERS
+### 4. CREATING DEMO & ADMIN USERS
 ----------------------------------------------------------------------
 Run the initialization SQL file:
 
-mysql -u root -p project < init.sql
+```mysql -u root -p project < init.sql```
 
 Default accounts:
 
@@ -105,36 +115,42 @@ Password: helloworld
 DEMO USER ACCOUNT
 Email: demo@rhad.com
 Password: password123
+
 ----------------------------------------------------------------------
-5. CONFIGURING DATABASE CONNECTION
+### 5. CONFIGURING DATABASE CONNECTION
 ----------------------------------------------------------------------
 Edit config.php:
-
+```
 class db {
     public static function getDB() {
         return new mysqli("localhost", "root", "YOUR_PASSWORD", "project");
     }
 }
+```
 
 Replace YOUR_PASSWORD with your MySQL root password.
+
 ----------------------------------------------------------------------
-6. RUNNING APACHE & MYSQL
+### 6. RUNNING APACHE & MYSQL
 ----------------------------------------------------------------------
 1. Start Apache
 2. Start MySQL
 3. Place the folder inside: C:\xampp\htdocs\project
 4. Visit in browser:
    http://localhost/project/shop.php
+
 ----------------------------------------------------------------------
-7. RUNNING THE APPLICATION
+### 7. RUNNING THE APPLICATION
 ----------------------------------------------------------------------
 Once Apache and MySQL are running:
 
 Go to:
 http://localhost/project/shop.php
+
 ----------------------------------------------------------------------
 PROJECT STRUCTURE
 ----------------------------------------------------------------------
+```
 /project
 │ README.md
 │ config.php
@@ -162,7 +178,8 @@ PROJECT STRUCTURE
 │
 ├── /photos
 └── /styles.css
+```
+
 ----------------------------------------------------------------------
 END OF README
 ----------------------------------------------------------------------
-

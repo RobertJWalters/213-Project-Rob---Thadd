@@ -1,4 +1,6 @@
 <?php
+// AI tools were used during development to assist developers
+// Robert Walters and Thadd McLeod
 require_once "config.php";
 require_once "CartClass.php";
 require_once "ProductRepo.php";
@@ -9,8 +11,9 @@ $productId = $_POST['id'];
 $action    = $_POST['action'];
 $cartQty = $_POST['qty'] ?? null;
 $stockQty = $_POST['stock-qty'] ?? null;
-
+//establish database connection
 $mysqli = db::getDB();
+// Initialize ProductRepo with database connection
 $productRepo = new ProductRepo($mysqli);
 
 $product = $productRepo->findProductByID($productId);

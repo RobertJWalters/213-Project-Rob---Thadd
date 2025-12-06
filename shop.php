@@ -1,15 +1,18 @@
 <?php
+// AI tools were used during development to assist developers
+// Robert Walters
 include 'loginModal.php';
 require_once "config.php";
 session_start();
 
-
+// Connect database
 $mysqli = db::getDB();
 
 $category = htmlspecialchars($_GET['category'] ?? "", ENT_QUOTES, 'UTF-8');
 
-
+// Initialize ProductRepo with database connection
 $prodRepo = new ProductRepo($mysqli);
+//Check category for category filter
 if ($category == "all" || $category == null) {
     $data = $prodRepo->findAll();
 } else {
@@ -27,7 +30,7 @@ if (!isset($_SESSION['cart'])) {
 
 <!DOCTYPE html>
 <html lang="en">
-<!-- html and jquery Code made with the help o-->
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">

@@ -1,5 +1,6 @@
 <?php
-
+// AI tools were used during development to assist developers
+// Robert Walters and Thadd McLeod
 class CartClass
 {
     private $id;

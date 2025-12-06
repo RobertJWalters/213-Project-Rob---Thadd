@@ -1,4 +1,6 @@
 <?php
+// AI tools were used during development to assist developers
+// Robert Walters and Thadd McLeod
 require_once "config.php";
 require_once "CartClass.php";
 require_once "ProductClass.php";

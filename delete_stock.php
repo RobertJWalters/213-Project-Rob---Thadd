@@ -1,4 +1,6 @@
 <?php
+// AI tools were used during development to assist developers
+// Robert Walters and Thadd McLeod
 require_once "config.php";
 session_start();
 
@@ -19,7 +21,7 @@ if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') 
     if ($mysqli === null) {
         echo "error";
         $success = false;
-    } else {
+    } else { // Initialize ProductRepo with database connection
         $prodRepo = new ProductRepo($mysqli);
         $data = $prodRepo->findAll();
         $_SESSION['productRepo'] = $prodRepo;

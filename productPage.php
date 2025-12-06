@@ -1,12 +1,13 @@
 <?php
-
+// AI tools were used during development to assist developers
+// Robert Walters and Thadd McLeod
 require_once 'config.php';
 session_start();
 $products = null;
-
+// Load database
 $mysqli = db::getDB();
 
-
+// Initialize ProductRepo with database connection
 $productRepo = new ProductRepo($mysqli);
 if (isset($_GET['id'])) {
     $id = htmlspecialchars($_GET['id'], ENT_QUOTES, 'UTF-8');

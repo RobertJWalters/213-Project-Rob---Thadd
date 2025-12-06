@@ -1,4 +1,6 @@
 <?php
+// AI tools were used during development to assist developers
+// Robert Walters and Thadd McLeod
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
