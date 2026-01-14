@@ -43,6 +43,7 @@ The application uses the following tables:
 
 ### Entity Relationship Diagram
 
+![My Image](ERD.png)
 ERD made using dbdiagram.io
 
 ## Design Decisions
